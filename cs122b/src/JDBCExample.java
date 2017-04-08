@@ -1,6 +1,7 @@
 import java.sql.*;
 public class JDBCExample {
 	   // JDBC driver name and database URL
+	// test
 	   static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 	   static final String DB_URL = "jdbc:mysql://localhost/moviedb";
 
