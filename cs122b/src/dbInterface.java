@@ -10,9 +10,11 @@ public class dbInterface
 	static final String USER = "root";
 	static final String PASS = "123456789";
 	public static void main(String[] args) {
-		executeQuery();
+		Scanner reader = new Scanner(System.in);
+		executeQuery(reader);
+		reader.close();
 	}
-	public static String selectOption() {
+	public static String selectOption(Scanner reader) {
 		Set<String> options = new HashSet<String>(Arrays.asList("a", "b", "c", "d", "e", "f", "s"));
 		String menu = "Select Option:\n"
 			+ "A: Find Movie Given a Star\n"
@@ -25,12 +27,9 @@ public class dbInterface
 		String choice = "";
 		while(choice != "s") {
 			System.out.println(menu);
-			Scanner reader = new Scanner(System.in);
 			System.out.print("Enter::");
-			if(reader.hasNext()){
-				choice = reader.nextLine().toLowerCase();
-			}			
-			reader.close();
+			choice = reader.nextLine().toLowerCase();	
+
 			if (menu.contains(choice) ) {
 				break;
 			}
@@ -41,7 +40,7 @@ public class dbInterface
 		return choice;
 		
 	}
-	public static void executeQuery() {
+	public static void executeQuery(Scanner reader) {
 		Connection conn = null;
 		Statement stmt = null;
 		PreparedStatement ps = null;
@@ -53,18 +52,16 @@ public class dbInterface
 		    System.out.println("Connecting to database...");
 		    conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			String option = "";
-
-			
-			do {
-				option = selectOption();
-				System.out.println("hello");
+			loop: while(true) {
+				option = selectOption(reader);
 				switch(option) {
 					case "a":
-						getMovieUI(ps, conn);
+						getMovieUI(ps, conn, reader);
 						break;
 					case "b":
 						break;
 					case "c":
+						insertCustomerUI(ps, conn, reader);
 						break;
 					case "d":
 						break;
@@ -73,11 +70,10 @@ public class dbInterface
 					case "f":
 						break;
 					case "s":
-						break;
+						break loop;
 					
 				} 
-				
-			}while(option != "s");
+			}
 		   }catch(SQLException se){
 			      //Handle errors for JDBC
 			      se.printStackTrace();
@@ -101,17 +97,21 @@ public class dbInterface
 			   System.out.println("Goodbye!");
 		
 	}
-	public static void getMovieUI(PreparedStatement ps, Connection conn) throws SQLException {
+	public static void getMovieUI(PreparedStatement ps, Connection conn, Scanner reader) throws SQLException {
 		ResultSet rs = null;
-		String star = "";
+		String fName = "", lName = "", id = "";
+		
 		while(true){
-			Scanner reader = new Scanner(System.in);
-			System.out.print("Enter Last Name and/or First Name or ID of Star::");
-			if(reader.hasNext()){
-				star = reader.nextLine();
+			System.out.print("Enter ID:");
+			id = reader.nextLine();
+			if(id.isEmpty()) {
+				System.out.print("Enter First Name:");
+				fName = reader.nextLine();
+				System.out.print("Enter Last Name:");
+				lName = reader.nextLine();
 			}
-			reader.close();
-			String result = sqlStatements.getMovies(star);
+			
+			String result = sqlStatements.getMovies(fName, lName, id);
 			if (result == "f") {
 				System.out.println("Please Enter Valid Star");
 				continue;
@@ -120,14 +120,63 @@ public class dbInterface
 			rs = ps.executeQuery();
 			ResultSetMetaData rsmd = rs.getMetaData();
 		    int columnsNumber = rsmd.getColumnCount();
-		    while (rs.next()) {
+		    if (!rs.next()) {
+		    	System.out.println("No results found.");
+		    	break;
+		    }
+		    do{
 		    	//Print one row          
 		    	for(int i = 1 ; i <= columnsNumber; i++){
 		    		System.out.print(rs.getString(i) + " "); //Print one element of a row
 		    	}
 		    	System.out.println();//Move to the next line to print the next row.           
-			}
-			
+			} while(rs.next());
+			break;
+		}
+		
+		
+	}
+	public static void insertCustomerUI(PreparedStatement ps, Connection conn, Scanner reader) throws SQLException {
+		String fName = "", lName = "", address = "", email = "", password = "";
+		System.out.print("Enter First Name:");
+		fName = reader.nextLine();
+		System.out.print("Enter Last Name:");
+		lName = reader.nextLine();
+		ResultSet rs = sqlStatements.findCreditCard(ps, conn, fName, lName);
+		ResultSet rs1 = sqlStatements.getCreditCard(ps, conn, fName, lName);
+		
+		if(sqlStatements.isEmpty(rs)) {
+	    	  while(true) {
+		    	  System.out.print("Enter Address:");
+		    	  address = reader.nextLine();
+		    	  if(address.isEmpty()) {
+		    		  System.out.println("Please enter address");
+		    		  continue;
+		    	  }
+		    	  break;
+		      }
+	    	  while(true) {
+		    	  System.out.print("Enter Email:");
+		    	  email = reader.nextLine();
+		    	  if(email.isEmpty()) {
+		    		  System.out.println("Please enter email");
+		    		  continue;
+		    	  }
+		    	  break;
+		      }	    	  
+	    	  while(true) {
+		    	  System.out.print("Enter Password:");
+		    	  password = reader.nextLine();
+		    	  if(password.isEmpty()) {
+		    		  System.out.println("Please enter password");
+		    		  continue;
+		    	  }
+		    	  break;
+		      }
+	    	  rs1.next();
+	    	  sqlStatements.insertCustomer(ps, conn, fName, lName, rs1.getString("card"), address, email, password);
+
+	    	  
 		}
 		
 	}
