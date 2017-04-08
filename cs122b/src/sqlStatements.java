@@ -19,7 +19,7 @@ public class sqlStatements
 			return String.format("select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and s.id = sm.star_id and s.first_name = '%s' and s.last_name = '%s';", fName, lName);
 		}
 		else {
-			return "Please enter valid Star or ID\n";
+			return "f";
 		}
 		
 	}

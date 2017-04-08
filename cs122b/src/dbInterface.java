@@ -68,7 +68,7 @@ public class dbInterface
 			System.out.print("Enter Last Name and/or First Name or ID of Star::");
 			String star = reader.nextLine();
 			reader.close();
-			String result = sqlStatements.getMovies()
+			String result = sqlStatements.getMovies();
 		}
 		
 	}
