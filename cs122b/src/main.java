@@ -13,19 +13,16 @@ public class main {
 		 Connection conn = null;
 		 Statement stmt = null;
 		   try{
-		      //STEP 2: Register JDBC driver
 		      Class.forName("com.mysql.jdbc.Driver");
-
-		      //STEP 3: Open a connection
 		      System.out.println("Connecting to database...");
 		      conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
-		      //STEP 4: Execute a query
 		      System.out.println("Running statements");
 		      
 		      String sql = "select m.title from stars s, movies m, stars_in_movies sm WHERE s.first_name = 'Christopher' and s.id = sm.star_id and m.id = sm.movie_id;";
-		      stmt.executeQuery(sql);
-		      System.out.println("Finished query");
+
+		      
+		      
+		      
 		   }catch(SQLException se){
 		      //Handle errors for JDBC
 		      se.printStackTrace();
