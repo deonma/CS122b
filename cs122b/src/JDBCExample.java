@@ -31,7 +31,7 @@ public class JDBCExample {
 	      ResultSet rs = ps.executeQuery();
 	      ResultSetMetaData rsmd = rs.getMetaData();
 	      int columnsNumber = rsmd.getColumnCount();
-	      /*while (rs.next()) {
+	      while (rs.next()) {
 	    	//Print one row          
 	    		for(int i = 1 ; i <= columnsNumber; i++){
 
@@ -41,7 +41,7 @@ public class JDBCExample {
 
 	    	System.out.println();//Move to the next line to print the next row.           
 
-			}*/
+			}
 	      rs.next();
 	      System.out.println(rs.getInt("total"));
 	      if(rs.getInt("total") != 0) { 
