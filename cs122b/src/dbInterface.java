@@ -22,19 +22,23 @@ public class dbInterface
 			+ "E: Provide Meta Data of Database\n"
 			+ "F: Execute a SQL Query\n"
 			+ "S: Stop";
-		while(true) {
+		String choice = "";
+		while(choice != "s") {
 			System.out.println(menu);
 			Scanner reader = new Scanner(System.in);
 			System.out.print("Enter::");
-			String choice = reader.nextLine().toLowerCase();
+			if(reader.hasNext()){
+				choice = reader.nextLine().toLowerCase();
+			}			
 			reader.close();
 			if (menu.contains(choice) ) {
-				return choice;
+				break;
 			}
 			else {
 				System.out.println("Please choose valid option: a, b, c, d, e, f, s");
 			}
 		}
+		return choice;
 		
 	}
 	public static void executeQuery() {
@@ -42,11 +46,18 @@ public class dbInterface
 		Statement stmt = null;
 		PreparedStatement ps = null;
 		try{
+		    //Register JDBC driver
+		    Class.forName("com.mysql.jdbc.Driver");
+	
+		    //Open a connection
+		    System.out.println("Connecting to database...");
+		    conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			String option = "";
 
 			
-			while(option != "s") {
+			do {
 				option = selectOption();
+				System.out.println("hello");
 				switch(option) {
 					case "a":
 						getMovieUI(ps, conn);
@@ -59,10 +70,14 @@ public class dbInterface
 						break;
 					case "e":
 						break;
+					case "f":
+						break;
+					case "s":
+						break;
 					
-				}
+				} 
 				
-			}
+			}while(option != "s");
 		   }catch(SQLException se){
 			      //Handle errors for JDBC
 			      se.printStackTrace();
@@ -88,10 +103,13 @@ public class dbInterface
 	}
 	public static void getMovieUI(PreparedStatement ps, Connection conn) throws SQLException {
 		ResultSet rs = null;
+		String star = "";
 		while(true){
 			Scanner reader = new Scanner(System.in);
 			System.out.print("Enter Last Name and/or First Name or ID of Star::");
-			String star = reader.nextLine();
+			if(reader.hasNext()){
+				star = reader.nextLine();
+			}
 			reader.close();
 			String result = sqlStatements.getMovies(star);
 			if (result == "f") {
