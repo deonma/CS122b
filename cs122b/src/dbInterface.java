@@ -46,7 +46,7 @@ public class dbInterface
 		Statement stmt = null;
 		PreparedStatement ps = null;
 		try{
-		    //Register JDBC driver
+		    //Register JDBC driverafad
 		    Class.forName("com.mysql.jdbc.Driver");
 	
 		    //Open a connection
