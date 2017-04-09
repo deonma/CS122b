@@ -104,48 +104,44 @@ public class dbInterface
 		while(true){
 			System.out.print("Enter ID:");
 			id = reader.nextLine();
-			if(id.isEmpty()) {
-				System.out.print("Enter First Name:");
-				fName = reader.nextLine();
-				System.out.print("Enter Last Name:");
-				lName = reader.nextLine();
+			while(true) {
+				if(id.isEmpty()) {
+					System.out.print("Enter First Name:");
+					fName = reader.nextLine();
+					System.out.print("Enter Last Name:");
+					lName = reader.nextLine();
+					if(fName.isEmpty() && lName.isEmpty()) {
+						System.out.println("Please input First Name and/or Last Name");
+						continue;
+					}
+				}
+				break;
 			}
 			
-			String result = sqlStatements.getMovies(fName, lName, id);
-			if (result == "f") {
-				System.out.println("Please Enter Valid Star");
-				continue;
-			}
-			ps = conn.prepareStatement(result);
-			rs = ps.executeQuery();
-			ResultSetMetaData rsmd = rs.getMetaData();
-		    int columnsNumber = rsmd.getColumnCount();
-		    if (!rs.next()) {
-		    	System.out.println("No results found.");
-		    	break;
-		    }
-		    do{
-		    	//Print one row          
-		    	for(int i = 1 ; i <= columnsNumber; i++){
-		    		System.out.print(rs.getString(i) + " "); //Print one element of a row
-		    	}
-		    	System.out.println();//Move to the next line to print the next row.           
-			} while(rs.next());
 			break;
+			
 		}
-		
+		sqlStatements.getMovies(ps, conn, fName, lName, id);
+
 		
 	}
 	public static void insertCustomerUI(PreparedStatement ps, Connection conn, Scanner reader) throws SQLException {
 		String fName = "", lName = "", address = "", email = "", password = "";
 		System.out.print("Enter First Name:");
 		fName = reader.nextLine();
-		System.out.print("Enter Last Name:");
-		lName = reader.nextLine();
+		while(true) {
+			System.out.print("Enter Last Name:");
+			lName = reader.nextLine();
+			if (lName.isEmpty()) {
+				System.out.println("Please Enter a Last Name");
+				continue;
+			}
+			break;
+		}
 		ResultSet rs = sqlStatements.findCreditCard(ps, conn, fName, lName);
 		ResultSet rs1 = sqlStatements.getCreditCard(ps, conn, fName, lName);
 		
-		if(sqlStatements.isEmpty(rs)) {
+		if(sqlStatements.notEmpty(rs)) {
 	    	  while(true) {
 		    	  System.out.print("Enter Address:");
 		    	  address = reader.nextLine();
@@ -178,6 +174,10 @@ public class dbInterface
 
 	    	  
 		}
+		else {
+			System.out.println("Customer not found");
+		}
+			
 		
 	}
 	
