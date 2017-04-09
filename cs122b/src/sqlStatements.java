@@ -7,7 +7,7 @@ import java.util.Scanner;
 //select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and s.id = sm.star_id group by m.id;
 public class sqlStatements
 {
-	public static void getMovies(PreparedStatement ps, Connection conn, String fName, String lName, String id) throws SQLException {
+	public ResultSet getMovies(PreparedStatement ps, Connection conn, String fName, String lName, String id) throws SQLException {
 		String query = "";
 		ResultSet rs = null;
 		if (!id.isEmpty()) { 
@@ -24,7 +24,8 @@ public class sqlStatements
 		}
 		ps = conn.prepareStatement(query);
 		rs = ps.executeQuery();
-		ResultSetMetaData rsmd = rs.getMetaData();
+		return rs;
+		/*ResultSetMetaData rsmd = rs.getMetaData();
 	    int columnsNumber = rsmd.getColumnCount();
 	    if (!rs.next()) {
 	    	System.out.println("No results found.");
@@ -35,7 +36,7 @@ public class sqlStatements
 	    		System.out.print(rs.getString(i) + " "); //Print one element of a row
 	    	}
 	    	System.out.println();//Move to the next line to print the next row.           
-		} while(rs.next());
+		} while(rs.next());*/
 				
 	}
 	
