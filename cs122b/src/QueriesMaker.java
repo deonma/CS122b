@@ -128,18 +128,19 @@ public class QueriesMaker {
 	}
 	
 	public void printResultSet(ResultSet rs) throws SQLException {
-
 		ResultSetMetaData rsmd = rs.getMetaData();
 	    int columnsNumber = rsmd.getColumnCount();
 	    if (!rs.next()) {
-	    	System.out.println("No results found.");
+	    	System.out.println("No results found.\n");
 	    }
-	    do{
-	    	//Print one row          
-	    	for(int i = 1 ; i <= columnsNumber; i++){
-	    		System.out.print(rs.getString(i) + " "); //Print one element of a row
-	    	}
-	    	System.out.println();//Move to the next line to print the next row.           
-		} while(rs.next());	
+	    else{
+		    do{
+		    	//Print one row          
+		    	for(int i = 1 ; i <= columnsNumber; i++){
+		    		System.out.print(rs.getString(i) + " "); //Print one element of a row
+		    	}
+		    	System.out.println();//Move to the next line to print the next row.           
+			} while(rs.next());	
+	    }
 	}
 }
