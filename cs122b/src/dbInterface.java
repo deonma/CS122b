@@ -79,8 +79,14 @@ public class dbInterface
 		String fName = "", lName = "", id = "";
 		
 		while(true){
-			System.out.print("Enter ID:");
+			System.out.print("Enter ID number:");
 			id = reader.nextLine();
+			try{
+				Integer.parseInt(id);
+			} catch(NumberFormatException ne){
+				System.out.println("ID must be type Integer.");
+				continue;
+			}
 			while(true) {
 				if(id.isEmpty()) {
 					System.out.print("Enter First Name:");
@@ -187,8 +193,14 @@ public class dbInterface
 		String lastName = "";
 		reader = new Scanner(System.in);
 		while (true) {
-			System.out.print("Enter the ID of the Customer: ");
+			System.out.print("Enter the ID number of the Customer: ");
 			ID = reader.nextLine();
+			try{
+				Integer.parseInt(ID);
+			} catch(NumberFormatException ne){
+				System.out.println("ID must be type Integer.");
+				continue;
+			}
 			if (ID.isEmpty()) {
 				System.out.print("Enter the First Name of the Customer:");
 				firstName = reader.nextLine();
