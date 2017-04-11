@@ -56,7 +56,7 @@ public class QueriesMaker {
 				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards;"};
 		for (String a: arr){
 			stmt = conn.createStatement();
-			printResultSet(stmt.executeQuery(a));
+			printMetaData(stmt.executeQuery(a));
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class QueriesMaker {
 		{
 		case "SELECT":
 			stmt = conn.createStatement();
-			stmt.executeQuery(input);
+			printResultSet(stmt.executeQuery(input));
 			break;
 		default:
 			stmt = conn.createStatement();
@@ -130,17 +130,44 @@ public class QueriesMaker {
 	public void printResultSet(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmd = rs.getMetaData();
 	    int columnsNumber = rsmd.getColumnCount();
+	    String output = "";
+	    
+	    //Store column names
+	    for(int i = 1; i <= columnsNumber; ++i){
+	    	output += String.format("%-" + (rsmd.getColumnDisplaySize(i) + 5) + "s", rsmd.getColumnName(i));
+	    }
+	    
 	    if (!rs.next()) {
 	    	System.out.println("No results found.\n");
 	    }
 	    else{
-		    do{
-		    	//Print one row          
+	    	System.out.println(output);
+	    	do{
+	    		output = "";
+		    	//Print one row
+	    		for(int i = 1; i <= columnsNumber; ++i){
+	    			output += String.format("%-" + (rsmd.getColumnDisplaySize(i) + 5) + "s", rs.getString(i));
+	    	    }
+	    		System.out.println(output);;//Move to the next line to print the next row. 
+	    	} while(rs.next());
+	    }
+	}
+	
+	public void printMetaData(ResultSet rs) throws SQLException {
+		ResultSetMetaData rsmd = rs.getMetaData();
+	    int columnsNumber = rsmd.getColumnCount();
+	    if (!rs.next()) {
+	    	System.out.println("No results found.\n");
+	    }
+	    else{
+		    	int counter = 1;
+		    	//Print one row
+		    	System.out.format("Table %s has %d columns\n", rsmd.getTableName(counter), columnsNumber);
 		    	for(int i = 1 ; i <= columnsNumber; i++){
-		    		System.out.print(rs.getString(i) + " "); //Print one element of a row
+		    		System.out.format("Name of Column %d is %s of type %s\n", i, rsmd.getColumnName(i), rsmd.getColumnTypeName(i));
 		    	}
-		    	System.out.println();//Move to the next line to print the next row.           
-			} while(rs.next());	
+		    	System.out.println();//Move to the next line to print the next row.   
+		    	counter++;
 	    }
 	}
 }

@@ -81,11 +81,13 @@ public class dbInterface
 		while(true){
 			System.out.print("Enter ID number:");
 			id = reader.nextLine();
-			try{
-				Integer.parseInt(id);
-			} catch(NumberFormatException ne){
-				System.out.println("ID must be type Integer.");
-				continue;
+			if(!id.isEmpty()){
+				try{
+					Integer.parseInt(id);
+				} catch(NumberFormatException ne){
+					System.out.println("ID must be type Integer.");
+					continue;
+				}
 			}
 			while(true) {
 				if(id.isEmpty()) {
@@ -97,13 +99,10 @@ public class dbInterface
 						System.out.println("Please input First Name and/or Last Name");
 						continue;
 					}
-
 				}
 				break;
 			}
-			
 			break;
-			
 		}
 		queries.getMovies(fName, lName, id);
 
@@ -195,11 +194,13 @@ public class dbInterface
 		while (true) {
 			System.out.print("Enter the ID number of the Customer: ");
 			ID = reader.nextLine();
-			try{
-				Integer.parseInt(ID);
-			} catch(NumberFormatException ne){
-				System.out.println("ID must be type Integer.");
-				continue;
+			if(!ID.isEmpty()){
+				try{
+					Integer.parseInt(ID);
+				} catch(NumberFormatException ne){
+					System.out.println("ID must be type Integer.");
+					continue;
+				}
 			}
 			if (ID.isEmpty()) {
 				System.out.print("Enter the First Name of the Customer:");
@@ -226,8 +227,19 @@ public class dbInterface
 		while (true) {
 			System.out.print("Write a SQL Query:");
 			input = reader.nextLine();
-			queries.createQuery(input);
+			if(!input.isEmpty()){
+				try{
+					queries.createQuery(input);
+					break;
+				} catch (SQLException se){
+					System.out.println("Enter a proper SQL Query");
+				} catch (StringIndexOutOfBoundsException io){
+					System.out.println("Enter a proper SQL Query");
+				}
+			}
+			else{
+				System.out.println("Please enter a query");
+			}
 		}
 	}
-	
 }
