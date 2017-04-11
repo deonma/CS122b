@@ -73,7 +73,8 @@ public class QueriesMaker {
 			break;
 		default:
 			stmt = conn.createStatement();
-			stmt.executeUpdate(input);
+			int updates = stmt.executeUpdate(input);
+			System.out.format("%d rows changed\n\n", updates);
 		}
 	}
 	
