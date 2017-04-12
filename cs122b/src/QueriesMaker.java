@@ -21,10 +21,17 @@ public class QueriesMaker {
 	  	  ps.setString(2, lastName);
 	  	  if (dob.isEmpty())
 	  		  ps.setString(3, null);
-	  	  else
-	  		  ps.setDate(3, java.sql.Date.valueOf(dob));
+	  	  else {
+	  		  try {
+					ps.setDate(3, java.sql.Date.valueOf(dob));
+	  		  } catch (Exception e)
+	  		  {
+	  			  System.out.println("Invalid date.");
+	  		  }
+	  	  }
 	  	  ps.setString(4, photoURL);
-	  	  ps.executeUpdate();
+			int updates = ps.executeUpdate();
+			System.out.format("%d rows changed\n\n", updates);
 	}
 
 	// Delete a customer from the database.
@@ -45,7 +52,8 @@ public class QueriesMaker {
 				sql = "delete from customers where first_name = '" + firstName + "' and last_name = '"  + lastName + "';";
 		}
 		stmt = conn.createStatement();
-		stmt.executeUpdate(sql);
+		int updates = stmt.executeUpdate(sql);
+		System.out.format("%d rows changed\n\n", updates);;
 	}
 	
 	// Provide the metadata of the database; in particular, print out the name of each table and, 
@@ -112,15 +120,16 @@ public class QueriesMaker {
 		
 	}
 	public void insertCustomer(String fName, String lName, String ccid, String address, String email, String password) throws SQLException{
-	  String addCustomer = "insert into customers values(default, ?, ?, ?, ?, ?, ?)";
-  	  ps = conn.prepareStatement(addCustomer);
-  	  ps.setString(1, fName);
-  	  ps.setString(2, lName);
-  	  ps.setString(3, ccid);
-  	  ps.setString(4, address);
-  	  ps.setString(5, email);
-  	  ps.setString(6, password);
-  	  ps.executeUpdate();
+		String addCustomer = "insert into customers values(default, ?, ?, ?, ?, ?, ?)";
+  	  	ps = conn.prepareStatement(addCustomer);
+  	  	ps.setString(1, fName);
+  	  	ps.setString(2, lName);
+  	  	ps.setString(3, ccid);
+  	  	ps.setString(4, address);
+  	  	ps.setString(5, email);
+  	  	ps.setString(6, password);
+  	  	int updates = ps.executeUpdate();
+		System.out.format("%d rows changed\n\n", updates);
 	}
 	
 	public boolean notEmpty(ResultSet rs) throws SQLException {
