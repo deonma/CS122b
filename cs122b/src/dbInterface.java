@@ -10,7 +10,6 @@ public class dbInterface
 	private QueriesMaker queries;
 	private PreparedStatement ps;
 	private Scanner reader;
-	static final String DB_URL = "jdbc:mysql://localhost/moviedb";
 	public dbInterface(){ 
 		reader = new Scanner(System.in);
 	
@@ -34,7 +33,9 @@ public class dbInterface
 	}
 	
 	public void employeeLogin() {
-		String username, password;
+		String username, password, DB_URL = "jdbc:mysql://localhost/";
+		System.out.print("Enter a database: ");
+		DB_URL += reader.nextLine();
 		System.out.print("Enter username: ");
 		username = reader.nextLine();
 		System.out.print("Enter password: ");
