@@ -53,7 +53,7 @@ public class QueriesMaker {
 		}
 		stmt = conn.createStatement();
 		int updates = stmt.executeUpdate(sql);
-		System.out.format("%d rows changed\n\n", updates);;
+		System.out.format("%d rows changed\n\n", updates);
 	}
 	
 	// Provide the metadata of the database; in particular, print out the name of each table and, 
