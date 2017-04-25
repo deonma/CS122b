@@ -1,0 +1,207 @@
+import java.sql.*;
+
+public class QueriesMaker {
+	
+	private Connection conn;
+	private Statement stmt;
+	private PreparedStatement ps;
+	public QueriesMaker(Connection conn, PreparedStatement ps)
+	{
+		this.conn = conn;
+		this.ps = ps;
+	}
+
+	// Insert a new star into the database. If the star has a single name, add it as his last_name 
+	// and assign an empty string ("") to first_name.
+	public void InsertStar(String firstName, String lastName, String dob, String photoURL) throws SQLException
+	{
+		  String addCustomer = "insert into stars values(default, ?, ?, ?, ?)";
+	  	  ps = conn.prepareStatement(addCustomer);
+	  	  ps.setString(1, firstName);
+	  	  ps.setString(2, lastName);
+	  	  if (dob.isEmpty())
+	  		  ps.setString(3, null);
+	  	  else {
+	  		  try {
+					ps.setDate(3, java.sql.Date.valueOf(dob));
+	  		  } catch (Exception e)
+	  		  {
+	  			  System.out.println("Invalid date.");
+	  		  }
+	  	  }
+	  	  ps.setString(4, photoURL);
+			int updates = ps.executeUpdate();
+			System.out.format("%d rows changed\n\n", updates);
+	}
+
+	// Delete a customer from the database.
+	public void deleteCustomer(String ID, String firstName, String lastName) throws SQLException
+	{
+		String sql;
+		
+		if (!ID.isEmpty())
+		{
+				sql = "delete from customers where id = " + ID + ";";
+		}
+		else {
+			if (firstName.isEmpty())
+				sql = "delete from customers where last_name = '" + lastName + "';";
+			else if (lastName.isEmpty())
+				sql = "delete from customers where first_name = '" + firstName + "';";
+			else 
+				sql = "delete from customers where first_name = '" + firstName + "' and last_name = '"  + lastName + "';";
+		}
+		stmt = conn.createStatement();
+		int updates = stmt.executeUpdate(sql);
+		System.out.format("%d rows changed\n\n", updates);;
+	}
+	
+	// Provide the metadata of the database; in particular, print out the name of each table and, 
+	// for each table, each attribute and its type.
+	public void provideMetaData() throws SQLException
+	{
+		String[] arr= {"select * from movies;", "select * from stars;", "select * from stars_in_movies;", "select * from genres; ",
+				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards;"};
+		for (String a: arr){
+			stmt = conn.createStatement();
+			printMetaData(stmt.executeQuery(a));
+		}
+	}
+
+	// Returns a result set of a query
+	public ResultSet selectQuery(String query) throws SQLException
+	{
+		stmt = conn.createStatement();
+		return stmt.executeQuery(query);
+	}
+
+	
+	// Enter a valid SELECT/UPDATE/INSERT/DELETE SQL command. 
+	// The system should take the corresponding action, and return and display the valid results.
+	public void createQuery(String input) throws SQLException
+	{
+		String query = input.substring(0, input.indexOf(' '));
+		switch(query.toUpperCase())
+		{
+		case "SELECT":
+			stmt = conn.createStatement();
+			printResultSet(stmt.executeQuery(input));
+			break;
+		default:
+			stmt = conn.createStatement();
+			int updates = stmt.executeUpdate(input);
+			System.out.format("%d rows changed\n\n", updates);
+		}
+	}
+    	
+	// Get Movies
+	public ResultSet getMovies(String fName, String lName, String id) throws SQLException {
+		String query = "";
+		if (!id.isEmpty()) { 
+			query = String.format("select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and sm.star_id = %s and s.id = %s group by m.id;", id, id);
+		}
+		if (fName.isEmpty() && !lName.isEmpty()) {
+		        query = String.format("select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and s.id = sm.star_id and s.last_name = '%s';", lName);
+		    }
+		if (!fName.isEmpty() && lName.isEmpty()) {
+	        query = String.format("select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and s.id = sm.star_id and s.first_name = '%s';", fName);
+	    }
+		if (!fName.isEmpty() && !lName.isEmpty()) {
+			query = String.format("select m.id, m.title, m.myear, m.director, m.banner_url, m.trailer_url from movies m, stars s, stars_in_movies sm where m.id = sm.movie_id and s.id = sm.star_id and s.first_name = '%s' and s.last_name = '%s';", fName, lName);
+		}
+		ps = conn.prepareStatement(query);
+		return ps.executeQuery(query);
+	}
+	
+	public ResultSet findCreditCard(String fName, String lName) throws SQLException {
+		String check = String.format("select count(*) as total from creditcards cc where cc.first_name = '%s' and cc.last_name = '%s';", fName, lName);
+		ps = conn.prepareStatement(check);
+		ResultSet rs = ps.executeQuery();
+		return rs;
+		
+	}
+	public ResultSet getCreditCard(String fName, String lName) throws SQLException {
+		String check = String.format("select cc.id as card from creditcards cc where cc.first_name = '%s' and cc.last_name = '%s';", fName, lName);
+		ps = conn.prepareStatement(check);
+		ResultSet rs = ps.executeQuery();
+		return rs;
+		
+	}
+	public void insertCustomer(String fName, String lName, String ccid, String address, String email, String password) throws SQLException{
+		String addCustomer = "insert into customers values(default, ?, ?, ?, ?, ?, ?)";
+  	  	ps = conn.prepareStatement(addCustomer);
+  	  	ps.setString(1, fName);
+  	  	ps.setString(2, lName);
+  	  	ps.setString(3, ccid);
+  	  	ps.setString(4, address);
+  	  	ps.setString(5, email);
+  	  	ps.setString(6, password);
+  	  	int updates = ps.executeUpdate();
+		System.out.format("%d rows changed\n\n", updates);
+	}
+        public boolean isCustomer(String user, String pass) throws SQLException {
+		String findCustomer = String.format("select count(*) as total from customers c where c.email = '%s' and c.cpassword = '%s';", user, pass);
+                ps = conn.prepareStatement(findCustomer);
+		ResultSet rs = ps.executeQuery();
+                return notEmpty(rs);
+        } 	
+	public boolean notEmpty(ResultSet rs) throws SQLException {
+		rs.next();
+		return rs.getInt("total") != 0;
+	}
+	
+
+    public ResultSet getPageMovie(int offset) throws SQLException {
+        String query = String.format("select * from movies order by title limit 10 offset %d", offset*10);
+        stmt = conn.createStatement();
+        return stmt.executeQuery(query);
+    }
+    public ResultSet searchMovie(String toSearch, int offset) throws SQLException {
+        String query = String.format("select * from movies where title like '%%%s%%' order by title limit 10 offset %d", toSearch,offset*10);
+        stmt = conn.createStatement();
+        return stmt.executeQuery(query);
+    }
+	public void printResultSet(ResultSet rs) throws SQLException {
+		ResultSetMetaData rsmd = rs.getMetaData();
+	    int columnsNumber = rsmd.getColumnCount();
+	    String output = "";
+	    
+	    //Store column names
+	    for(int i = 1; i <= columnsNumber; ++i){
+	    	output += String.format("%-" + (rsmd.getColumnDisplaySize(i) + 5) + "s", rsmd.getColumnName(i));
+	    }
+	    
+	    if (!rs.next()) {
+	    	System.out.println("No results found.\n");
+	    }
+	    else{
+	    	System.out.println(output);
+	    	do{
+	    		output = "";
+		    	//Print one row
+	    		for(int i = 1; i <= columnsNumber; ++i){
+	    			output += String.format("%-" + (rsmd.getColumnDisplaySize(i) + 5) + "s", rs.getString(i));
+	    	    }
+	    		System.out.println(output);;//Move to the next line to print the next row. 
+	    	} while(rs.next());
+	    }
+	}
+	
+	public void printMetaData(ResultSet rs) throws SQLException {
+		ResultSetMetaData rsmd = rs.getMetaData();
+	    int columnsNumber = rsmd.getColumnCount();
+	    if (!rs.next()) {
+	    	System.out.println("No results found.\n");
+	    }
+	    else{
+		    	int counter = 1;
+		    	//Print one row
+		    	System.out.format("Table %s has %d columns\n", rsmd.getTableName(counter), columnsNumber);
+		    	for(int i = 1 ; i <= columnsNumber; i++){
+		    		System.out.format("Name of Column %d is %s of type %s\n", i, rsmd.getColumnName(i), rsmd.getColumnTypeName(i));
+		    	}
+		    	System.out.println();//Move to the next line to print the next row.   
+		    	counter++;
+	    }
+	}
+}

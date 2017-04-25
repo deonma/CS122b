@@ -1,0 +1,64 @@
+
+body {
+  background: #dfebec;
+}
+
+.login-page {
+  width: 500px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+
+
+.form {
+  position: relative;
+  background: #cfe1e2;
+  max-width: 500px;
+  padding: 35px;
+  margin: 0 auto 100px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form label {
+  font-family: "Georgia", serif;
+  color: #5F9F9F;
+  font-size: 80px;
+}
+
+.form p {
+  font-family: "Georgia", serif;
+  color: #FF0000;
+
+}
+
+.form [type="password"], .form [type="email"] {
+  font-family: "Georgia", serif;
+  outline: 0;
+  background: #f5f5f5;
+  width: 75%;
+  padding: 15px;
+  border: 0;
+  margin: 0px 0px 3px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form *:focus {
+  outline:none;
+}
+
+.form [type="submit"] {
+  font-family: "Georgia", serif;
+  border: 0;
+  text-transform: uppercase;
+  background: #5F9F9F;
+  width: 75%;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.form [type="submit"]:hover {
+  background: #395E60;
+}
