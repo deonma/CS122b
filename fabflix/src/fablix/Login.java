@@ -16,10 +16,11 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
     p=request.getParameter("userpass");
     PrintWriter out = response.getWriter();
     if(access.validate(n,p)){
+        Cookie email = new Cookie("email", n);
+        email.setMaxAge(60*60*24);
+        response.addCookie(email);
         RequestDispatcher rd=request.getRequestDispatcher("Search");  
         rd.include(request,response);
-        Cookie email = new Cookie("email", n);
-        response.addCookie(email);
     }  
     else{ 
         request.setAttribute("flag", false);

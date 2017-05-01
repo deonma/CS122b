@@ -1,22 +1,12 @@
 
 body {
-  background: #dfebec;
-}
-
-img {
-    margin:auto;
-    border:1px solid #000;
-    border-radius:4px;
-    padding:5px;
-    width:50px;
-    float:left;
+    background: #D9D9D9 !important;
 }
 
 .movie-table{
     width:400px;
     margin:auto;
     font-size:14px;
-    border:1px solid #000;
     border-collapse:collapse;
 }
 
@@ -24,12 +14,21 @@ img {
     color:#000;
     vertical-align:middle;
     text-align:left;
-    border:1px solid #000; 
 }
 
 .table1 td {
     color:#000099;
     vertical-align:middle;
     text-align:left;
-    border:1px solid #000; 
 }
+
+.mOuter {
+    margin: auto;
+    width: 60%;
+    padding: 120px;
+}
+
+.sButton{
+    text-align:center;
+}
+

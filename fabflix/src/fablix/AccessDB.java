@@ -209,12 +209,23 @@ public class AccessDB {
     public String getCustomerId(String email)
     {
     	try {
-			rs = queries.selectQuery(String.format("select * from customers where email = '%s'", email));
-			return rs.getString(1);
+			rs = queries.selectQuery(String.format("select id from customers where email = '%s';", email));
+			while(rs.next()){
+				return Integer.toString(rs.getInt(1));
+			}
+			return null;
     	} catch (Exception e) {
+    		e.printStackTrace();
     		return null;
     	}
     }
 
+    public void insertSales(String c_id, String m_id, String date){
+        try{
+            String query = String.format("insert into sales(customer_id, movie_id, sale_date) values('%s', '%s', '%s')", c_id, m_id, date);
+            queries.createQuery(query);
+        }catch(Exception e){
+        }
+    }
 
 }  

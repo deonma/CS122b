@@ -1,0 +1,33 @@
+
+body {
+    background:#D9D9D9 !important;
+}
+
+table {
+    margin:auto;
+    border-collapse: collapse;
+    width:60%;
+}
+
+th, td{
+    padding: 8px;
+    text-align: left;
+}
+
+tr:nth-child(even){
+    background-color:#f2f2f2;
+}
+
+h3 {
+    text-align:center;
+}
+
+.cOuter{
+    margin:auto;
+    width:60%;    
+    padding:120px;
+}
+
+#box {
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}

@@ -44,6 +44,10 @@
 		<servlet-name>ccInfo</servlet-name>
 		<servlet-class>fablix.ccInfo</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>StarsPage</servlet-name>
+		<servlet-class>fablix.StarsPage</servlet-class>
+	</servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -84,8 +88,12 @@
     <servlet-name>ccInfo</servlet-name>
     <url-pattern>/ccInfo</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StarsPage</servlet-name>
+    <url-pattern>/StarsPage</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
-    <welcome-file>login.html</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   
 </web-app>

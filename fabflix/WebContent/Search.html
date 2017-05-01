@@ -1,10 +1,22 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+    <script src="https://www.w3schools.com/lib/w3data.js"></script> 
+</head>
+<body>
 	<form action="ShoppingCart" method="post" id="toShop">
 	</form>
     <form class="search-form" action="Search" method="get" id="searchform">
         <input type="image" name="title" src="fabflix.png" />
-        <input type="text" name="searchstring" placeholder="Search for movies..."/>
-        <input type="submit" name="enter" value="Go"/>
-        <input type="submit" name="title" value="Browse by Title"/>
+        <input type="text" name="searchstring" placeholder="Titles,people,genres..."/>
+        <button type="submit" class="btn btn-warning" name ="enter" value="Go">Go</button> 
+        <button type="submit" class="btn btn-warning" name ="title" value="Browse by title">Browse by Title</button> 
+        <!--   <input type="submit" name="enter" value="Go"/>-->
+        <!--  <input type="submit" name="title" value="Browse by Title"/> -->
         <select name="genre" onchange="this.form.submit()">
             <option value="" style="display:none" disabled selected>Browse by Genre</option>
             <option value="Action">Action</option>
@@ -13,7 +25,7 @@
             <option value="Biography">Biography</option>
             <option value="Classic">Classic</option>
             <option value="Comedy">Comedy</option>
-            <option value="Coming-of-Age-Drama">Coming-of-Age-Drama</option>
+            <option value="Coming-of-Age-Drama">Coming-of-Age</option>
             <option value="Crime">Crime</option>
             <option value="Drama">Drama</option>
             <option value="Documentary">Documentary</option>
@@ -27,8 +39,8 @@
             <option value="James Bond">James Bond</option>
             <option value="Music">Music</option>
             <option value="Musical">Musical</option>
-            <option value="Musical/Performing Arts">Musical/Performing Arts</option>
             <option value="Mystery">Mystery</option>
+            <option value="Musical/Performing Arts">Performing Arts</option>
             <option value="Roman">Roman</option>
             <option value="Romance">Romance</option>
             <option value="Sci-Fi">Sci-Fi</option>
@@ -38,6 +50,7 @@
             <option value="Thriller">Thriller</option>
             <option value="War">War</option>
         </select>
-		<button form="toShop" type="submit">Go To Cart</button>
+		<button form="toShop" class="btn btn-warning" type="submit">Go To Cart</button>
     </form>
 
+</body>

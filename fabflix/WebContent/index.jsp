@@ -5,7 +5,12 @@
 <!doctype html>
 <head>
     <meta charset="UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3data.js"></script> 
 </head>
   <% ArrayList<String> movies = (ArrayList<String>) request.getAttribute("Movies"); %>
@@ -42,64 +47,9 @@
   <table class="everything-table">
   <% if(none != null) { %>
     <tr> <td>No Results Found...</td></tr>
-  <% }else{if( movies != null && movies.size() != 0) {for(int i = 0; i < movies.size(); ++i){ %>
-    <tr>
-
-        <%String title = movies.get(i);%>
-        <%String id = ids.get(i);%>
-    <table class="result-table">
-        <tr>
-        <p><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><%=movies.get(i)%> (<%=years.get(i)%>)</a></p>
-        </tr>
-        <tr>
-        <td>ID:<%=ids.get(i)%></td>
-        <td><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><img border="0" alt="<%=movies.get(i)%>" src="<%=banners.get(i)%>" width="100" height="100"></a></td>
-        </tr>
-        <tr>
-        <td>Director:</td><td><%=directors.get(i)%></td>
-        </tr>
-        <tr>
-        <td>Stars:</td>
-        <td>
-            <%int size = stars.get(i).size();%>
-            <%for(Map.Entry<String, String> entry : stars.get(i).entrySet()){%>
-                <a href="StarsPage?id=<%=entry.getKey()%>&name=<%=entry.getValue()%>"><%=entry.getValue()%></a>
-                <%if(size != 1){%>
-                    ,
-                <% } %>
-                <%size--;%>
-            <% } %>
-        </td>
-        </tr>
-        <tr>
-        <td>Genres:</td>
-        <td>
-            <%for(int a = 0; a < genres.get(i).size(); ++a){%>
-                <a href="Search?genre=<%=genres.get(i).get(a)%>"><%=genres.get(i).get(a)%></a>
-                <%if(a != genres.get(i).size() - 1){%>
-                    ,
-                <% } %>
-            <% } %>
-        </td>
-        </tr>
-    </table>
-    </tr>
-    <% } %>
-    <tr>
-    <td>
-    <form class="scrollform" action="Search" method="get" id="scrollform">
-        <input type="submit" name="changePage" value="<<"/>
-        <input type="submit" name="changePage" value="<"/>
-        <input type="submit" name="changePage" value=">"/>
-        <input type="submit" name="changePage" value=">>"/>
-        <input type="hidden" name="scrollString" value="${searchString}" />
-        <input type="hidden" name="sortString" value="${sortString}" />
-    <% if (genreString != null) { %>
-        <input type="hidden" name="genreString" value="${genreString}" />
-    <% } %>
-    </form>
-    <form class="sortform" action="Search" method="get" id="sortform">
-        <select name="sortBy" onchange="this.form.submit()">
+  <% }else{if( movies != null && movies.size() != 0) {%>
+    <form class="sortForm" action="Search" method="get" id="sortform">
+        <select  name="sortBy" onchange="this.form.submit()">
     <% if(sortString.equals("m.title")) {%>
         <option value="m.title" selected>Sort:A-Z</option>
         <option value="m.title desc">Sort:Z-A</option>
@@ -127,13 +77,80 @@
         <input type="hidden" name="genreString" value="${genreString}" />
     <% } %>
     </form>
+
+    <%for(int i = 0; i < movies.size(); ++i){ %>
+    <tr>
+
+        <%String title = movies.get(i);%>
+        <%String id = ids.get(i);%>
+    <table class="result-table" >
+        <tr>
+        </tr>
+        <tr>
+        <td><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><img border="0" alt="<%=movies.get(i)%>" src="<%=banners.get(i)%>" width="150" height="190"></a></td>
+        <td>
+        <table class="movie-info-table">
+        <tr><p><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><%=movies.get(i)%> (<%=years.get(i)%>)</a></p></tr>
+        <tr class="mInfo"><td>ID:</td><td><%=ids.get(i)%></td></tr>
+        <tr class="mInfo"><td>Director:</td><td><%=directors.get(i)%></td></tr>
+        <tr class="mInfo"><td>Stars:</td><td>
+            <%int size = stars.get(i).size();%>
+            <%for(Map.Entry<String, String> entry : stars.get(i).entrySet()){%>
+                <a href="StarsPage?id=<%=entry.getKey()%>&name=<%=entry.getValue()%>"><%=entry.getValue()%></a>
+                <%if(size != 1){%>
+                    ,
+                <% } %>
+                <%size--;%>
+            <% } %>
+        </td></tr>
+        <tr class="mInfo"><td>Genres:</td><td>
+            <%for(int a = 0; a < genres.get(i).size(); ++a){%>
+                <a href="Search?genre=<%=genres.get(i).get(a)%>"><%=genres.get(i).get(a)%></a>
+                <%if(a != genres.get(i).size() - 1){%>
+                    ,
+                <% } %>
+            <% } %>
+        </td></tr>
+        <tr><td>
+            <form class="addCart" action="CartFunction"  id="cart" method="post">
+                <input type="hidden" name="cartMethod" value="addCart"/>
+                <input type="hidden" name="movieName" value="<%=movies.get(i)%>"/>
+                <input type="hidden" name="movieId" value="<%=ids.get(i)%>"/>
+                <button class="glyphicon glyphicon-shopping-cart" type="submit" name="cart" value="Add to cart"/>
+            </form>
+        </td></tr>
+        </table>
+        </td>
+        </tr>
+    </table>
+    </tr>
+    <% } %>
+    <tr>
+    <td>
+    <div class="row text-center">
+    <form class="scrollform" action="Search" method="get" id="scrollform">
+        <button type="submit" class="btn btn-default btn-sm" name="changePage" value="<<"> <span class="glyphicon glyphicon-menu-left"></span> <span class="glyphicon glyphicon-menu-left"></span> </button>
+
+        <button type="submit" class="btn btn-default btn-sm" name="changePage" value="<"><span class="glyphicon glyphicon-menu-left"></span> </button>
+
+<button type="submit" class="btn btn-default btn-sm" name="changePage" value=">"> <span class="glyphicon glyphicon-menu-right"></span></button>
+
+        <button type="submit" class="btn btn-default btn-sm" name="changePage" value=">>"> <span class="glyphicon glyphicon-menu-right"></span> <span class="glyphicon glyphicon-menu-right"></span> </button>
+        <input type="hidden" name="scrollString" value="${searchString}" />
+        <input type="hidden" name="sortString" value="${sortString}" />
+    <% if (genreString != null) { %>
+        <input type="hidden" name="genreString" value="${genreString}" />
+    <% } %>
+    </form>
+    </div>
     </td>
     </tr>
 
     <% } else{ %> 
     <tr> <td>No More Results</td></tr>
     <tr><td>
-    <form class="scrollform" action="Search" method="get" id="scrollform">
+    <div class="row text-center">
+    <form class="scrollform" action="Search" method="get" id="scrollform">  
         <input type="submit" name="changePage" value="<<"/>
         <input type="submit" name="changePage" value="<"/>
         <input type="hidden" name="scrollString" value="${searchString}" />
@@ -142,6 +159,7 @@
         <input type="hidden" name="genreString" value="${genreString}" />
     <% } %>   
     </form>
+    </div>
     </td></tr>
     <% }} %>
     </table>

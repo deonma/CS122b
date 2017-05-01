@@ -18,14 +18,6 @@
 <script>w3IncludeHTML();</script> 
 <div class="row">
 	<div class="col col-md-12">
-	<nav class="navbar navbar-default">
-	<form class="" action="Login" method="post" id="back">
-		<input type="text" name="searchstring" placeholder="Back To Menu"/> 
-		<input type="submit" value="Go"/> 
-	</form>
-	</nav>
-	</div>
-	<div class="col col-md-12">
 			<h1> Shopping Cart </h1> 
 	</div>
 </div>
@@ -45,7 +37,7 @@
 			%>
 				<tr>
 				<td><%=movie %></td>
-				<td><%=price%></td>
+				<td>$<%=price%></td>
 				<td><%=quantity%>
 				<td>
 					<form action="CartFunction" method="post" id="modify <%=movie%>">
@@ -70,12 +62,14 @@
 			</table>
 		</div>
 	<div class="container col-md-4">
+        <div id="box"> 
 		<div class="jumbotron" align="right">
 		<form action="ccInfo.jsp" id="ccInfo">
 			<div class="row"> <h3> Subtotal (<%=movies.size()%> item):</h3> $<%=totalPrice%></div>
 			<div class="row"><input type="submit" value="Proceed to Checkout"></div>
 		</form>
 		</div>
+        </div>
 	</div>
 	<% } %>
 </div>

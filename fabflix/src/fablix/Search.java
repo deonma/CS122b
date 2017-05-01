@@ -155,6 +155,8 @@ public class Search extends HttpServlet {
         }
         request.setAttribute("Stars", stars);
         request.setAttribute("Genres", genres); 
+        offset.setMaxAge(60*60*24);
+        pageCookie.setMaxAge(60*60*24);
         response.addCookie(offset);
         response.addCookie(pageCookie);
         RequestDispatcher rd=request.getRequestDispatcher("index.jsp");

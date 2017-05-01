@@ -4,9 +4,10 @@
 <!doctype html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/MoviesPage.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<script src="js/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/MoviesPage.css">
+    <script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3data.js"></script> 
 </head>
@@ -25,9 +26,11 @@
 <div w3-include-html="Search.html"></div>
 <script>w3IncludeHTML();</script>
 <%if(movie != null) {%>
-    <table class="movie-table">
-    <img src="<%=banner_url%>" style="width:304px;height:228px;">
-
+    <div class="mOuter">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4"><img class="img-responsive" src="<%=banner_url%>" style="width:150px;height:190px;float:right;"></div>
+    <div class="col-sm-8 col-md-8 col-lg-8">
+    <table style="float:left" class="movie-table">
     <tr><th>Title:</th><td><%=title%></td></tr>
     <tr><th>Year:</th><td><%=year%></td></tr>
     <tr><th>Director:</th><td><%=director%></td></tr>
@@ -59,15 +62,16 @@
     <tr><th>Trailer:</th><td><a href="<%=trailer_url%>">Click here</a> to watch the trailer</td></tr>
     <tr><th>Price:</th><td>$9.99</td></tr>
     </table>
-	
-		<form class="addCart" action="CartFunction"  id="cart" method="post">  
-			<input type="hidden" name="cartMethod" value="addCart"/>
-			<input type="hidden" name="movieName" value="<%=title%>"/>
-			<input type="hidden" name="movieId" value="<%=id%>"/>
-			<input type="submit" name="cart" value="Add to cart"/> 
-		</form>
-		
-	</div>
+    </div>
+    </div>
+    <div class="sButton">
+        <form class="addCart" action="CartFunction"  id="cart" method="post">  
+            <input type="hidden" name="cartMethod" value="addCart"/>
+            <input type="hidden" name="movieName" value="<%=title%>"/>
+            <input type="hidden" name="movieId" value="<%=id%>"/>
+            <button class="glyphicon glyphicon-shopping-cart" type="submit" name="cart" value="Add to cart"/> 
+        </form>
+    </div>
     <% } %>
     </div>
 </body>

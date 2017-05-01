@@ -4,8 +4,11 @@
 <!doctype html>
 <head>
     <meta charset="UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/StarsPage.css">
-    <script src="https://www.w3schools.com/lib/w3data.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="https://www.w3schools.com/lib/w3data.js"></script> 
 </head>
 
 <%ArrayList<String> star = (ArrayList<String>) request.getAttribute("star");%>
@@ -20,8 +23,11 @@
 <div w3-include-html="Search.html"></div>
 <script>w3IncludeHTML();</script>
 <%if(star != null) {%>
-    <img src="<%=photo_url%>" style="width:80px;height:100px;">
-    <table class="star-table">
+    <div class="sOuter">
+    <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4"><img class="img-responsive" src="<%=photo_url%>" style="width:160px;height:190px;float:right;"></div>
+    <div class="col-sm-8 col-md-8 col-lg-8">
+    <table style="float:left" class="star-table">
         <tr><th>Name:</th><td><%=fname%> <%=lname%></td></tr>
         <tr><th>Date of Birth:</th><td><%=dob%></td></tr>
         <tr><th>Star id:</th><td><%=id%></td></tr>
@@ -39,4 +45,6 @@
         </tr>
     </table>
     <% } %>
+    </div>
+    </div>
 </body>
