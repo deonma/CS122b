@@ -1,0 +1,35 @@
+
+body {
+  background: #dfebec;
+}
+
+img {
+    margin:auto;
+    border:1px solid #000;
+    border-radius:4px;
+    padding:5px;
+    width:50px;
+    float:left;
+}
+
+.movie-table{
+    width:400px;
+    margin:auto;
+    font-size:14px;
+    border:1px solid #000;
+    border-collapse:collapse;
+}
+
+.table1 th {
+    color:#000;
+    vertical-align:middle;
+    text-align:left;
+    border:1px solid #000; 
+}
+
+.table1 td {
+    color:#000099;
+    vertical-align:middle;
+    text-align:left;
+    border:1px solid #000; 
+}

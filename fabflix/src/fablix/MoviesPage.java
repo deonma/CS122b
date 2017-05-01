@@ -1,3 +1,5 @@
+package fablix;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -12,25 +14,19 @@ public class MoviesPage extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccessDB access = new AccessDB();
-        ResultSet rs;
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        ArrayList<String> movie = new ArrayList<String>();
         String title = request.getParameter("title");
-        try{
-            rs = access.findMovie(title);
-            while(rs.next()){
-                for(int i = 1; i <= 6; ++i){
-                    movie.add(rs.getString(i));
-                }
-            } 
-        }catch(Exception e){
-        }
+        String id = request.getParameter("id");
+        ArrayList<String> movie = access.getMovie(id);
+        HashMap<String, String> stars = access.getStars(id);
+        ArrayList<String> genre = access.getGenre(id);
 
         request.setAttribute("movie", movie);
+        request.setAttribute("stars", stars);
+        request.setAttribute("genre", genre);
         RequestDispatcher rd = request.getRequestDispatcher("MoviesPage.jsp");
         rd.forward(request, response);
-
     }
 }

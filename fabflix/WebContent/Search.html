@@ -1,0 +1,43 @@
+	<form action="ShoppingCart" method="post" id="toShop">
+	</form>
+    <form class="search-form" action="Search" method="get" id="searchform">
+        <input type="image" name="title" src="fabflix.png" />
+        <input type="text" name="searchstring" placeholder="Search for movies..."/>
+        <input type="submit" name="enter" value="Go"/>
+        <input type="submit" name="title" value="Browse by Title"/>
+        <select name="genre" onchange="this.form.submit()">
+            <option value="" style="display:none" disabled selected>Browse by Genre</option>
+            <option value="Action">Action</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Animation">Animation</option>
+            <option value="Biography">Biography</option>
+            <option value="Classic">Classic</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Coming-of-Age-Drama">Coming-of-Age-Drama</option>
+            <option value="Crime">Crime</option>
+            <option value="Drama">Drama</option>
+            <option value="Documentary">Documentary</option>
+            <option value="Family">Family</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Foreign">Foreign</option>
+            <option value="Gangster">Gangster</option>
+            <option value="History">History</option>
+            <option value="Horror">Horror</option>
+            <option value="Indie">Indie</option>
+            <option value="James Bond">James Bond</option>
+            <option value="Music">Music</option>
+            <option value="Musical">Musical</option>
+            <option value="Musical/Performing Arts">Musical/Performing Arts</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Roman">Roman</option>
+            <option value="Romance">Romance</option>
+            <option value="Sci-Fi">Sci-Fi</option>
+            <option value="Sport">Sport</option>
+            <option value="Spy">Spy</option>
+            <option value="Suspense">Suspense</option>
+            <option value="Thriller">Thriller</option>
+            <option value="War">War</option>
+        </select>
+		<button form="toShop" type="submit">Go To Cart</button>
+    </form>
+

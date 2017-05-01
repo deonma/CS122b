@@ -1,0 +1,34 @@
+
+body {
+    background: #dfebec;
+}
+
+.result-table{
+    width:400px;
+    margin:auto;
+    font-size:14px;
+    border-collapse:collapse;
+}
+
+.everything-table{
+    width:400px;
+    margin:auto;
+    border-collapse:collapse;
+}
+
+.table1 th {
+    color:#000;
+    vertical-align:middle;
+    text-align:left;
+}
+
+.table1 td {
+    color:#000099;
+    vertical-align:middle;
+    text-align:left;
+}
+
+
+p {
+    text-align:center;
+}
