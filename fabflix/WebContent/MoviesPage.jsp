@@ -60,7 +60,7 @@
         </td>
     </tr>
     <tr><th>Trailer:</th><td><a href="<%=trailer_url%>">Click here</a> to watch the trailer</td></tr>
-    <tr><th>Price:</th><td>$9.99</td></tr>
+    <tr><th>Price:</th><td>$5.00</td></tr>
     </table>
     </div>
     </div>
