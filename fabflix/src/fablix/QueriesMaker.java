@@ -76,7 +76,7 @@ public class QueriesMaker {
 	public ResultSetMetaData[] provideMetaData() throws SQLException
 	{
 		String[] arr= {"select * from movies;", "select * from stars;", "select * from stars_in_movies;", "select * from genres; ",
-				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards; select * from employees;"};
+				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards;", "select * from employees;"};
 		ResultSetMetaData[] results = new ResultSetMetaData[arr.length];
 		for (int i = 0; i < arr.length; ++i){
 			stmt = conn.createStatement();
@@ -226,9 +226,7 @@ public class QueriesMaker {
 	
 	public ResultSetMetaData printMetaData(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmd = rs.getMetaData();
-	    int columnsNumber = rsmd.getColumnCount();
 	    if (!rs.next()) {
-	    	System.out.println("No results found.\n");
 	    	return null;
 	    }
 	    else{

@@ -53,6 +53,11 @@
 		<servlet-class>fablix.EmployeeLogin</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>Dashboard</servlet-name>
+		<servlet-class>fablix.Dashboard</servlet-class>
+	</servlet>
+
+	<servlet>
 		<servlet-name>employee_login.jsp</servlet-name>
 		<jsp-file>/employee_login.jsp</jsp-file>
 	</servlet>
@@ -104,6 +109,11 @@
     <servlet-name>EmployeeLogin</servlet-name>
     <url-pattern>/EmployeeLogin</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Dashboard</servlet-name>
+    <url-pattern>/Dashboard</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>employee_login.jsp</servlet-name>
     <url-pattern>/_dashboard/*</url-pattern>

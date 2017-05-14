@@ -12,7 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Dashboard extends HttpServlet {
-	
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+		doPost(request, response);
+	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        AccessDB access = new AccessDB();
@@ -27,10 +30,7 @@ public class Dashboard extends HttpServlet {
 
 	        try{
 	        	action = request.getParameter("action");
-	        }catch(Exception e){
-	        }
-	        
-	        switch(action){
+	        	switch(action){
 	        	case "movie":
 	        		title = request.getParameter("title");
 	        		year = request.getParameter("year");
@@ -49,6 +49,10 @@ public class Dashboard extends HttpServlet {
 	        		break;
 	        	default:
 	        }
+	        }catch(Exception e){
+
+	        }
+	        
 	        
 	        request.setAttribute("message", message);
 	        request.setAttribute("metadata", access.provideMetadata());
@@ -56,4 +60,5 @@ public class Dashboard extends HttpServlet {
             rd.include(request, response);
 
 	    }
+	
 }

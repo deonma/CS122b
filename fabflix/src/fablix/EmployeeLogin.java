@@ -23,10 +23,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			rd.include(request,response);  
 		}
 		else if(access.validateEmployee(n,p)){
-			Cookie email = new Cookie("email", n);
-			email.setMaxAge(60*60*24);
-			response.addCookie(email);
-			RequestDispatcher rd=request.getRequestDispatcher("dashboard.jsp");  
+			RequestDispatcher rd=request.getRequestDispatcher("Dashboard");  
 			rd.include(request,response);
 		}  
 		else
