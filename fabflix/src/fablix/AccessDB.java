@@ -235,5 +235,21 @@ public class AccessDB {
         }catch(Exception e){
         }
     }
+    
+    public void insertStar(String fname, String lname, String dob, String photoURL){
+    	try{
+            queries.InsertStar(fname, lname, dob, photoURL);
+        }catch(Exception e){
+        }
+    }
+    
+    public void addMovie(String title, int year, String director, String fname,
+    		String lname, String genre){
+    	try{
+    		String query = String.format("call add_movie('%s', %d, '%s', '%s', '%s', '%s')", title, year, director, fname, lname, genre);
+    		queries.createQuery(query);
+    	}catch(Exception e){
+        }
+    }
 
 }  
