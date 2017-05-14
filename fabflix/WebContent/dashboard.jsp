@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>dashboard</title>
-    <link rel="stylesheet" href="css/ccInfo.css">
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 
 <%
@@ -34,7 +34,7 @@
             <input id="dob" type="date" value="" name="dob"/>
         </span>
         <span style="display:inline-block">
-            <label for="photoURL">Last name</label>
+            <label for="photoURL">Photo URL</label>
             <input id="photoURL" type="text" value="" name="photoURL"/>
         </span>
         <div style="text-align:center">
