@@ -26,14 +26,15 @@
 <body>
 	<div class="login-page">
 	<div class="form">	
-		<form class="login-form" action="Login" method="post" id="loginform">  
+		<form class="login-form" action="EmployeeLogin" method="post" id="loginform">  
 			<img src="fabflix.png">
             <%if(!flag){%>
-  			    <p id="error"><font color="red">Please use correct email or password</font></p>	
+  			    <p id="error"><font color="red">Incorrect Employee Information</font></p>	
 			<% } %>
 			<%if(!captchaFlag){%>
   			    <p id="error"><font color="red">Invalid Captcha </font></p>
 			<% } %>
+			<p> <font color="black"> Employee Login Page </font> </p>
             <input type="email" name="username" placeholder="email"/> 
 			<input type="password" name="userpass" placeholder="password"/>
 			<input type="submit" value="Login"/> 

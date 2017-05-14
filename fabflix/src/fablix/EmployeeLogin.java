@@ -7,8 +7,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;  
   
   
-public class Login extends HttpServlet {  
-public void doPost(HttpServletRequest request, HttpServletResponse response)  
+public class EmployeeLogin extends HttpServlet {  
+public void doGet(HttpServletRequest request, HttpServletResponse response)  
         throws ServletException, IOException {  
 		AccessDB access = new AccessDB();
 		String n,p, gRecaptchaResponse;      
@@ -19,10 +19,10 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
 		if (!VerifyUtils.verify(gRecaptchaResponse))
 		{
 			request.setAttribute("captchaFlag", false);
-			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+			RequestDispatcher rd=request.getRequestDispatcher("employee_login.jsp");  
 			rd.include(request,response);  
 		}
-		else if(access.validate(n,p)){
+		else if(access.validateEmployee(n,p)){
 			Cookie email = new Cookie("email", n);
 			email.setMaxAge(60*60*24);
 			response.addCookie(email);
@@ -32,7 +32,7 @@ public void doPost(HttpServletRequest request, HttpServletResponse response)
 		else
 		{ 
 			request.setAttribute("flag", false);
-			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");  
+			RequestDispatcher rd=request.getRequestDispatcher("employee_login.jsp");  
 			rd.include(request,response);  
 		} 
           

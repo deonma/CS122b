@@ -141,13 +141,22 @@ public class QueriesMaker {
   	  	int updates = ps.executeUpdate();
 		System.out.format("%d rows changed\n\n", updates);
 	}
+	
+	// Checks if the user is in the customer table
     public boolean isCustomer(String user, String pass) throws SQLException {
 		String findCustomer = String.format("select count(*) as total from customers c where c.email = '%s' and c.cpassword = '%s';", user, pass);
                 ps = conn.prepareStatement(findCustomer);
 		ResultSet rs = ps.executeQuery();
                 return notEmpty(rs);
-        }
+	}
 
+    // Checks if user is in the employees table
+    public boolean isEmployee(String user, String pass) throws SQLException {
+		String findEmployee = String.format("select count(*) as total from employees where email = '%s' and password = '%s';", user, pass);
+                ps = conn.prepareStatement(findEmployee);
+		ResultSet rs = ps.executeQuery();
+                return notEmpty(rs);
+	}
     public boolean isCreditCard(String fname, String lname, String ccid, String expiration) throws SQLException{
         String findCreditCard = String.format("select count(*) as total from creditcards cc where cc.first_name = '%s' and cc.last_name = '%s' and cc.id = '%s' and cc.expiration = '%s';", fname, lname, ccid, expiration);
         ps = conn.prepareStatement(findCreditCard);

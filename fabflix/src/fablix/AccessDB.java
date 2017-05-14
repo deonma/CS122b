@@ -32,7 +32,15 @@ public class AccessDB {
 			return false;
 		}
 	}
-
+	
+	public boolean  validateEmployee(String name, String pass) {
+		try{  
+			return queries.isEmployee(name, pass);
+		}catch(Exception e){
+			System.out.println(e);
+			return false;
+		}
+	}
     public boolean validateCC(String fname, String lname, String ccid, String expiration){
         try{
             return queries.isCreditCard(fname, lname, ccid, expiration);
