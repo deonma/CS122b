@@ -236,19 +236,21 @@ public class AccessDB {
         }
     }
     
-    public void insertStar(String fname, String lname, String dob, String photoURL){
+    public String insertStar(String fname, String lname, String dob, String photoURL){
     	try{
-            queries.InsertStar(fname, lname, dob, photoURL);
+            return queries.InsertStar(fname, lname, dob, photoURL);
         }catch(Exception e){
+        	return e.getMessage();
         }
     }
     
-    public void addMovie(String title, int year, String director, String fname,
+    public String addMovie(String title, int year, String director, String fname,
     		String lname, String genre){
     	try{
     		String query = String.format("call add_movie('%s', %d, '%s', '%s', '%s', '%s')", title, year, director, fname, lname, genre);
-    		queries.createQuery(query);
+    		return queries.callProcedure(query);
     	}catch(Exception e){
+    		return e.getMessage();
         }
     }
     

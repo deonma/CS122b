@@ -21,13 +21,20 @@ public class QueriesMaker {
 
 	// Insert a new star into the database. If the star has a single name, add it as his last_name 
 	// and assign an empty string ("") to first_name.
-	public void InsertStar(String firstName, String lastName, String dob, String photoURL) throws SQLException
+	public String InsertStar(String firstName, String lastName, String dob, String photoURL) throws SQLException
 	{
 		  String addCustomer = "insert into stars values(default, ?, ?, ?, ?)";
 	  	  ps = conn.prepareStatement(addCustomer);
 	  	  ps.setString(1, firstName);
 	  	  ps.setString(2, lastName);
-	  	  if (dob.isEmpty())
+	  	  if(dob.isEmpty())
+	  		  ps.setString(3, null);
+	  	  else
+	  		  ps.setDate(3, java.sql.Date.valueOf(dob));
+	  	  ps.setString(4, photoURL);
+	  	  int updates = ps.executeUpdate();
+	  	  return String.format("%d rows changed\n\n", updates);
+	  	  /*if (dob.isEmpty())
 	  		  ps.setString(3, null);
 	  	  else {
 	  		  try {
@@ -39,7 +46,7 @@ public class QueriesMaker {
 	  	  }
 	  	  ps.setString(4, photoURL);
 			int updates = ps.executeUpdate();
-			System.out.format("%d rows changed\n\n", updates);
+			System.out.format("%d rows changed\n\n", updates);*/
 	}
 
 	// Delete a customer from the database.
@@ -227,5 +234,11 @@ public class QueriesMaker {
 	    else{
 	    	return rsmd;
 	    }
+	}
+	
+	public String callProcedure(String query) throws SQLException{
+		stmt = conn.createStatement();
+		int updates = stmt.executeUpdate(query);
+		return String.format("%d rows changed\n\n", updates);
 	}
 }
