@@ -26,7 +26,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			Cookie email = new Cookie("email", n);
 			email.setMaxAge(60*60*24);
 			response.addCookie(email);
-			RequestDispatcher rd=request.getRequestDispatcher("Search");  
+			RequestDispatcher rd=request.getRequestDispatcher("dashboard.jsp");  
 			rd.include(request,response);
 		}  
 		else
@@ -37,4 +37,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 		} 
           
     }  
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {  
+		doGet(request, response);
+	}
 }  
