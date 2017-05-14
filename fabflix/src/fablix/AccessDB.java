@@ -251,5 +251,14 @@ public class AccessDB {
     	}catch(Exception e){
         }
     }
+    
+    public ResultSetMetaData[] provideMetadata() {
+    	try {
+			return queries.provideMetaData();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return null;
+    	}
+    } 
 
 }  

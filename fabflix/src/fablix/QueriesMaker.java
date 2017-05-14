@@ -66,14 +66,16 @@ public class QueriesMaker {
 	
 	// Provide the metadata of the database; in particular, print out the name of each table and, 
 	// for each table, each attribute and its type.
-	public void provideMetaData() throws SQLException
+	public ResultSetMetaData[] provideMetaData() throws SQLException
 	{
 		String[] arr= {"select * from movies;", "select * from stars;", "select * from stars_in_movies;", "select * from genres; ",
-				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards;"};
-		for (String a: arr){
+				 "select * from genres_in_movies;", "select * from customers;", "select * from sales;", "select * from creditcards; select * from employees;"};
+		ResultSetMetaData[] results = new ResultSetMetaData[arr.length];
+		for (int i = 0; i < arr.length; ++i){
 			stmt = conn.createStatement();
-			printMetaData(stmt.executeQuery(a));
+			results[i] = printMetaData(stmt.executeQuery(arr[i]));
 		}
+		return results;
 	}
 
 	// Returns a result set of a query
@@ -215,21 +217,15 @@ public class QueriesMaker {
         int updates = ps.executeUpdate();  
     }
 	
-	public void printMetaData(ResultSet rs) throws SQLException {
+	public ResultSetMetaData printMetaData(ResultSet rs) throws SQLException {
 		ResultSetMetaData rsmd = rs.getMetaData();
 	    int columnsNumber = rsmd.getColumnCount();
 	    if (!rs.next()) {
 	    	System.out.println("No results found.\n");
+	    	return null;
 	    }
 	    else{
-		    	int counter = 1;
-		    	//Print one row
-		    	System.out.format("Table %s has %d columns\n", rsmd.getTableName(counter), columnsNumber);
-		    	for(int i = 1 ; i <= columnsNumber; i++){
-		    		System.out.format("Name of Column %d is %s of type %s\n", i, rsmd.getColumnName(i), rsmd.getColumnTypeName(i));
-		    	}
-		    	System.out.println();//Move to the next line to print the next row.   
-		    	counter++;
+	    	return rsmd;
 	    }
 	}
 }
