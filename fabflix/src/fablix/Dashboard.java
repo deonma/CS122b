@@ -19,42 +19,34 @@ public class Dashboard extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        AccessDB access = new AccessDB();
-	        HttpSession session = request.getSession();
 	        response.setContentType("text/html");
-	        PrintWriter out = response.getWriter();
 	        
-	        //Actions : movie, star
-	        
-	        String action, message, title, year, director, fname, lname, genre, dob, photoURL;
-	        action = message = title = year = director = fname = lname = genre = dob = photoURL = "";
+	        String button = null, button1 = null;
 
 	        try{
-	        	action = request.getParameter("action");
-	        	switch(action){
-	        	case "movie":
-	        		title = request.getParameter("title");
-	        		year = request.getParameter("year");
-	        		director = request.getParameter("director");
-	        		fname = request.getParameter("fname");
-	        		lname = request.getParameter("lname");
-	        		genre = request.getParameter("genre");
-	        		message = access.addMovie(title, Integer.parseInt(year), director, fname, lname, genre);
-	        		break;
-	        	case "star":
-	        		fname = request.getParameter("fname");
-	        		lname = request.getParameter("lname");
-	        		dob =  request.getParameter("dob");
-	        		photoURL = request.getParameter("photoURL");
-	        		message = access.insertStar(fname, lname, dob, photoURL);
-	        		break;
-	        	default:
-	        }
+	        	button = request.getParameter("movie");
+	        	button1 = request.getParameter("star");
 	        }catch(Exception e){
-
+	        	request.setAttribute("message", e.getMessage());
 	        }
 	        
+	        if(button != null){
+        		String title = request.getParameter("title");
+        		String year = request.getParameter("year");
+        		String director = request.getParameter("director");
+        		String fname = request.getParameter("firstName");
+        		String lname = request.getParameter("lastName");
+        		String genre = request.getParameter("genre");
+        		request.setAttribute("message", access.addMovie(title, Integer.parseInt(year), director, fname, lname, genre));
+        	}
+        	else if(button1 != null){
+        		String fname1 = request.getParameter("fname");
+        		String lname1 = request.getParameter("lname");
+        		String dob =  request.getParameter("dob");
+        		String photoURL = request.getParameter("photoURL");
+        		request.setAttribute("message", access.insertStar(fname1, lname1, dob, photoURL));
+        	}
 	        
-	        request.setAttribute("message", message);
 	        request.setAttribute("metadata", access.provideMetadata());
 	        RequestDispatcher rd = request.getRequestDispatcher("dashboard.jsp");
             rd.include(request, response);

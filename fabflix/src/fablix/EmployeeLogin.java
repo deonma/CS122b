@@ -23,7 +23,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 			rd.include(request,response);  
 		}
 		else if(access.validateEmployee(n,p)){
-			RequestDispatcher rd=request.getRequestDispatcher("Dashboard");  
+			request.setAttribute("metadata", access.provideMetadata());
+	        RequestDispatcher rd = request.getRequestDispatcher("dashboard.jsp"); 
 			rd.include(request,response);
 		}  
 		else

@@ -17,15 +17,14 @@
 </head>
 
 <%
-    boolean flag = true;
-    try{
-        flag = (boolean) request.getAttribute("flag");
-    }catch(Exception e){
-    }
+    String message = (String) request.getAttribute("message");
 %>
 
 <body>
 	<h3>Dashboard</h3>
+	<% if(message != null){ %>
+		<p id="output"><font color="red"><%=message%></font></p>
+	<% } %>
 	<div class="container row">
 		<div class="panel-group">
 			<div class="panel panel-default">
@@ -34,7 +33,7 @@
 				</div>
 				<div id="actorform" class="panel-collapse collapse">
 					<div class="panel-body">
-						<form action="dashboard" method="post" id="dashboardForm">
+						<form action="Dashboard" method="post" id="dashboardForm">
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">First Name</label>
 							  <div class="col-10">
@@ -44,7 +43,7 @@
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">Last Name</label>
 							  <div class="col-10">
-								<input class="form-control" type="text" placeholder="Last Name" name="lname" id="lname">
+								<input class="form-control" type="text" placeholder="Last Name" name="lname" id="lname" required>
 							  </div>
 							</div>
 							<div class="form-group row">
@@ -59,7 +58,7 @@
 								<input class="form-control" type="text" placeholder="Photo URL" name="photoURL" id="photoURL">
 							  </div>
 							</div>
-							<button type="submit" style="margin-left:50%" class="btn btn-warning" >Submit</button>
+							<button name="star" type="submit" style="margin-left:50%" class="btn btn-warning" >Submit</button>
 						</form>
 					</div>
 				</div>
@@ -74,44 +73,44 @@
 				</div>
 				<div id="movieform" class="panel-collapse collapse">
 					<div class="panel-body">
-						<form action="dashboard" method="post" id="dashboardForm">
+						<form action="Dashboard" method="post" id="dashboardForm">
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">Title</label>
 							  <div class="col-10">
-								<input class="form-control" type="text" placeholder="Title" name="title" id="title">
+								<input class="form-control" type="text" placeholder="Title" name="title" id="title" required>
 							  </div>
 							</div>
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">Year</label>
 							  <div class="col-10">
-								<input class="form-control" type="number" pattern='[0-9]{4}' placeholder="yyyy" name="year" id="year">
+								<input class="form-control" type="number" pattern='[0-9]{4}' placeholder="yyyy" name="year" id="year" required>
 							  </div>
 							</div>
 							<div class="form-group row">
 							  <label for="exampMle-text-input" class="col-2 col-form-label">Director</label>
 							  <div class="col-10">
-								<input class="form-control" type="text" placeholder="Director" name="director" id="director">
+								<input class="form-control" type="text" placeholder="Director" name="director" id="director" required>
 							  </div>
 							</div>
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">First Name</label>
 							  <div class="col-10">
-								<input class="form-control" type="text" placeholder="First Name" name="fname" id="lname">
+								<input class="form-control" type="text" placeholder="First Name" name="firstName" id="lname" required>
 							  </div>
 							</div>
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">Last Name</label>
 							  <div class="col-10">
-								<input class="form-control" type="text" placeholder="Last Name" name="lname" id="lname">
+								<input class="form-control" type="text" placeholder="Last Name" name="lastName" id="lname" required>
 							  </div>
 							</div>
 							<div class="form-group row">
 							  <label for="example-text-input" class="col-2 col-form-label">Genre</label>
 							  <div class="col-10">
-								<input class="form-control" type="date" placeholder="Genre" name="genre" id="genre">
+								<input class="form-control" type="text" placeholder="Genre" name="genre" id="genre" required>
 							  </div>
 							</div>
-							<button type="submit" style="margin-left:50%" class="btn btn-warning" >Submit</button>
+							<button name="movie" type="submit" style="margin-left:50%" class="btn btn-warning" >Submit</button>
 						</form>
 					</div>
 				</div>

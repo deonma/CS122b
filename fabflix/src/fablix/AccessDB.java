@@ -237,18 +237,73 @@ public class AccessDB {
     }
     
     public String insertStar(String fname, String lname, String dob, String photoURL){
+    	
     	try{
-            return queries.InsertStar(fname, lname, dob, photoURL);
+    		String check = String.format("select count(*) as total from stars where first_name='%s' and last_name='%s'", fname, lname);
+            rs = queries.selectQuery(check);
+            if(queries.notEmpty(rs)){
+            	return "Could not add star, already exists in database";
+            }
+            else{
+            	queries.InsertStar(fname, lname, dob, photoURL);
+            	return "Star has been added";
+            }
         }catch(Exception e){
         	return e.getMessage();
         }
     }
     
+    public String bigUpdate(String title, int year, String director, String fname,
+    		String lname, String genre){
+    	String message = "";
+    	String query = "";
+    	try{
+    		//Check movie
+    		query = String.format("select count(*) as mtotal from movies where title='%s' and myear=%d and director='%s'", title, year, director);
+			rs = queries.selectQuery(query);
+			rs.next();
+			if(rs.getInt("mtotal") == 0)
+				message += "Movie has been added<br>";
+			else
+				message += "Could not add movie, already exists in database<br>";
+			
+			//Check star
+			query = String.format("select count(*) as stotal from stars where first_name='%s' and last_name='%s'", fname, lname);
+			rs = queries.selectQuery(query);
+			rs.next();
+			if(rs.getInt("stotal") == 0)
+				message += "Star has been added<br>"
+						+ "Star has been linked to movie<br>";
+			else
+				message += "Could not add star, already exists in database<br>"
+						+ "Star has been linked to movie<br>";
+				
+			//Check genre
+			query = String.format("select count(*) as qtotal from genres where gname='%s'", genre);
+			rs = queries.selectQuery(query);
+			rs.next();
+			if(rs.getInt("qtotal") == 0)
+				message += "Genre has been added<br>"
+						+ "Genre has been linked to movie<br>";
+			else
+				message += "Could not add genre, already exists in database<br>"
+						+ "Genre has been linked to movie<br>";
+				
+			
+			
+    		return message;
+    	}catch(Exception e){
+    		return e.getMessage();
+    	}
+    }
+    
     public String addMovie(String title, int year, String director, String fname,
     		String lname, String genre){
     	try{
+    		//Check if exists : movie, star, genre
     		String query = String.format("call add_movie('%s', %d, '%s', '%s', '%s', '%s')", title, year, director, fname, lname, genre);
-    		return queries.callProcedure(query);
+    		queries.callProcedure(query);
+    		return bigUpdate(title, year, director, fname, lname, genre);
     	}catch(Exception e){
     		return e.getMessage();
         }
