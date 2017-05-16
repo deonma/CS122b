@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"  %>
 <%@ page import="java.util.*" %>
 
-
 <!doctype html>
 <head>
 	<meta charset="UTF-8">
@@ -14,11 +13,11 @@
     boolean flag = true;
 	boolean captchaFlag = true;
     try{
-        captchaFlag = (boolean) request.getAttribute("captchaFlag");
+        captchaFlag =  (Boolean) request.getAttribute("captchaFlag");
     }catch(Exception e){
     }
     try{
-        flag = (boolean) request.getAttribute("flag");
+        flag = (Boolean) request.getAttribute("flag");
     }catch(Exception e){
     }
 %>

@@ -13,7 +13,7 @@
 <%
     boolean flag = true;
     try{
-        flag = (boolean) request.getAttribute("flag");
+        flag = (Boolean) request.getAttribute("flag");
     }catch(Exception e){
     }
 
