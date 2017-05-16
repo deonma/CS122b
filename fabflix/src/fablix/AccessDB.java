@@ -255,10 +255,13 @@ public class AccessDB {
     
     public String bigUpdate(String title, int year, String director, String fname,
     		String lname, String genre){
-    	String message = "";
-    	String query = "";
-    	try{
-    		//Check movie
+    	ResultSet mrs, srs, grs;
+    	String message = "", query = "";
+    	String m_id = String.format("(select id from movies where title='%s' and myear=%d and director='%s')", title, year, director);
+    	String s_id = String.format("(select id from stars where first_name='%s' and last_name='%s')", fname, lname);
+    	String g_id = String.format("(select id from genres where gname='%s')", genre);
+    	
+    	try{//Check movie
     		query = String.format("select count(*) as mtotal from movies where title='%s' and myear=%d and director='%s'", title, year, director);
 			rs = queries.selectQuery(query);
 			rs.next();
@@ -272,24 +275,36 @@ public class AccessDB {
 			rs = queries.selectQuery(query);
 			rs.next();
 			if(rs.getInt("stotal") == 0)
-				message += "Star has been added<br>"
-						+ "Star has been linked to movie<br>";
+				message += "Star has been added<br>";
 			else
-				message += "Could not add star, already exists in database<br>"
-						+ "Star has been linked to movie<br>";
-				
+				message += "Could not add star, already exists in database<br>";
+			
+			//Check stars_in_movies
+			query = String.format("select count(*) as sitotal from stars_in_movies where star_id=%s and movie_id=%s", s_id, m_id);
+			rs = queries.selectQuery(query);
+			rs.next();
+			if(rs.getInt("sitotal") == 0)
+				message += "Star has been linked to movie<br>";
+			else
+				message += "Star is already linked to movie<br>";
+			
 			//Check genre
 			query = String.format("select count(*) as qtotal from genres where gname='%s'", genre);
 			rs = queries.selectQuery(query);
 			rs.next();
 			if(rs.getInt("qtotal") == 0)
-				message += "Genre has been added<br>"
-						+ "Genre has been linked to movie<br>";
+				message += "Genre has been added<br>";
 			else
-				message += "Could not add genre, already exists in database<br>"
-						+ "Genre has been linked to movie<br>";
-				
+				message += "Could not add genre, already exists in database<br>";
 			
+			//Check genre_in_movie
+			query = String.format("select count(*) as gitotal from genres_in_movies where genre_id=%s and movie_id=%s", g_id, m_id);
+			rs = queries.selectQuery(query);
+			rs.next();
+			if(rs.getInt("gitotal") == 0)
+				message += "Genre has been linked to movie<br>";
+			else
+				message += "Genre is already linked to movie<br>";
 			
     		return message;
     	}catch(Exception e){
@@ -299,11 +314,12 @@ public class AccessDB {
     
     public String addMovie(String title, int year, String director, String fname,
     		String lname, String genre){
+    	String message = bigUpdate(title, year, director, fname, lname, genre);
     	try{
     		//Check if exists : movie, star, genre
     		String query = String.format("call add_movie('%s', %d, '%s', '%s', '%s', '%s')", title, year, director, fname, lname, genre);
     		queries.callProcedure(query);
-    		return bigUpdate(title, year, director, fname, lname, genre);
+    		return message;
     	}catch(Exception e){
     		return e.getMessage();
         }
