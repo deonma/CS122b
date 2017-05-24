@@ -228,5 +228,17 @@ public class QueriesMaker {
 		//return String.format("%d rows changed", updates);
 	}
 	
+	//Drop down search : title
+	public String movieDropList(String searchString){
+		String[] tokenize = searchString.split(" ");
+		String concat = "";
+		for(int i = 0; i < tokenize.length-1; ++i){
+			concat += String.format("+%s ", tokenize[i]);
+		}
+		concat += String.format("+%s*", tokenize[tokenize.length-1]);
+		String query = String.format("select title from movies where match (title) against ('%s' in boolean mode);", concat); 
+		return query;
+	}
+	
 }
 
