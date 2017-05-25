@@ -71,6 +71,15 @@ public class AccessDB {
             return rs;
         }
     }
+    public ResultSet getDropList(String name) {
+        try{
+        		String query = queries.movieDropList(name);
+                return queries.selectQuery(query);
+        }catch(Exception e){
+            System.out.println(e);
+            return rs;
+        }
+    }
     public ResultSet searchForMovie(String toSearch, String genre, String order, int offset, boolean last, int pageLimit)  {
         try{
             if(last){
