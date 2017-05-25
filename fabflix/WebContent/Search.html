@@ -6,13 +6,37 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-select.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3data.js"></script> 
+    <script src="js/test.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
 	<form action="ShoppingCart" method="post" id="toShop">
 	</form>
     <form class="search-form" action="Search" method="get" id="searchform">
         <input type="image" name="title" src="fabflix.png" />
-        <input type="text" name="searchstring" placeholder="Titles,people,genres..."/>
+        <input type="text" id="searchMovies" name="searchstring" list="movieList" autocomplete="off" placeholder="Titles,people,genres..."/>
+        <datalist id="movieList"></datalist>
+<script>
+	var searchRequest = null;
+	$("#searchMovies").keyup(function () {
+		var that = this,
+        value = $(this).val();
+		searchRequest = $.ajax({
+        	type: "GET",
+            url: "searchAutoComplete",
+            data: {toSearch : value},
+            dataType: "text",
+            success: function(data){
+            	var list = data.split("\t");
+           		$("#movieList").empty();
+				for (i = 0;i < list.length; i++) {
+					$("#movieList").append("<option value='" + list[i] + "'></option>");
+				}						
+           	}
+		});
+
+	});
+</script>
         <button type="submit" class="btn btn-warning" name ="enter" value="Go">Go</button> 
         <button type="submit" class="btn btn-warning" name ="title" value="Browse by title">Browse by Title</button> 
         <!--   <input type="submit" name="enter" value="Go"/>-->

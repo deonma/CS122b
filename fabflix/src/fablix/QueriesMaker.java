@@ -236,7 +236,7 @@ public class QueriesMaker {
 			concat += String.format("+%s ", tokenize[i]);
 		}
 		concat += String.format("+%s*", tokenize[tokenize.length-1]);
-		String query = String.format("select title from movies where match (title) against ('%s' in boolean mode);", concat); 
+		String query = String.format("select title from movies where match (title) against ('%s' in boolean mode) limit 10;", concat); 
 		return query;
 	}
 	

@@ -57,9 +57,15 @@
 		<servlet-class>fablix.Dashboard</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>searchAutoComplete</servlet-name>
+		<servlet-class>fablix.searchAutoComplete</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>employee_login.jsp</servlet-name>
 		<jsp-file>/employee_login.jsp</jsp-file>
 	</servlet>
+
+	
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -116,12 +122,15 @@
     <servlet-name>Dashboard</servlet-name>
     <url-pattern>/Dashboard</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>searchAutoComplete</servlet-name>
+    <url-pattern>/searchAutoComplete</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
  
-<security-constraint>
+<!-- <security-constraint>
  <web-resource-collection>
     <web-resource-name>HTTPSOnly</web-resource-name>
     <url-pattern>/*</url-pattern>
@@ -129,6 +138,6 @@
  <user-data-constraint>
     <transport-guarantee>CONFIDENTIAL</transport-guarantee>
  </user-data-constraint>
-</security-constraint>
+</security-constraint> -->
 </web-app>
 
