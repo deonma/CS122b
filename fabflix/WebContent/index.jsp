@@ -87,10 +87,28 @@
         <tr>
         </tr>
         <tr>
-        <td><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><img border="0" alt="<%=movies.get(i)%>" src="<%=banners.get(i)%>" width="150" height="190"></a></td>
+        <td><a id="mpic<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>"><img border="0" alt="<%=movies.get(i)%>" src="<%=banners.get(i)%>" width="150" height="190"></a></td>
         <td>
         <table class="movie-info-table">
-        <tr><p><a href="MoviesPage?id=<%=id%>&title=<%=title%>"><%=movies.get(i)%> (<%=years.get(i)%>)</a></p></tr>
+        <tr><p><a id="mtitle<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>"><%=movies.get(i)%> (<%=years.get(i)%>)</a></p></tr>
+        
+           	<script>
+        	function popup(){
+        		searchRequest = $.ajax({
+                	type: "GET",
+                    url: "Popup",
+                    data: {toSearch : <%=id%>},
+                    dataType: "text",
+                    success: function(data){
+                    	var list = data.split("\t");
+                   		alert(list);					
+                   	}
+        		});
+        	}
+        	document.getElementById("mpic" + <%=i%>).onmouseover=popup;
+        	document.getElementById("mtitle"+ <%=i%>).onmouseover=popup;
+      		</script>
+        
         <tr class="mInfo"><td>ID:</td><td><%=ids.get(i)%></td></tr>
         <tr class="mInfo"><td>Director:</td><td><%=directors.get(i)%></td></tr>
         <tr class="mInfo"><td>Stars:</td><td>
