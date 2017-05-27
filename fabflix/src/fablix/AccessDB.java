@@ -60,6 +60,19 @@ public class AccessDB {
 			return "";
 		}
 	}
+	
+	
+	// mobile methods
+	public ResultSet getMobileMovies() {
+		try {
+			return queries.selectQuery("select title from movies");
+		} catch (Exception e) {
+			System.out.println(e);
+			return rs;
+		}
+	}
+	
+	//
     public ResultSet getPageMovies(int offset, boolean last, String order, int pageLimit, String genre) {
         try{
             if(last){

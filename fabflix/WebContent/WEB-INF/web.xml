@@ -61,6 +61,10 @@
 		<servlet-class>fablix.searchAutoComplete</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>MobileLogin</servlet-name>
+		<servlet-class>mobile.MobileLogin</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>employee_login.jsp</servlet-name>
 		<jsp-file>/employee_login.jsp</jsp-file>
 	</servlet>
@@ -125,6 +129,10 @@
   <servlet-mapping>
     <servlet-name>searchAutoComplete</servlet-name>
     <url-pattern>/searchAutoComplete</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>MobileLogin</servlet-name>
+  	<url-pattern>/MobileLogin</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
