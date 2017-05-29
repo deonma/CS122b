@@ -64,6 +64,10 @@
 		<servlet-name>employee_login.jsp</servlet-name>
 		<jsp-file>/employee_login.jsp</jsp-file>
 	</servlet>
+	<servlet>
+		<servlet-name>Popup</servlet-name>
+		<servlet-class>fablix.Popup</servlet-class>
+	</servlet>
 
 	
   <servlet-mapping>
@@ -126,6 +130,11 @@
     <servlet-name>searchAutoComplete</servlet-name>
     <url-pattern>/searchAutoComplete</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Popup</servlet-name>
+    <url-pattern>/Popup</url-pattern>
+  </servlet-mapping>
+  
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
