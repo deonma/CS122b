@@ -13,6 +13,27 @@
 	<script src="js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3data.js"></script> 
 </head>
+
+<script>
+	function popup(mid){
+    	var searchRequest = $.ajax({
+           	type: "GET",
+            url: "Popup",
+            data: {toSearch : mid},
+            dataType: "text",
+            success: function(data){
+               	$("#mtitle"+mid).html(data);
+               	$("#mtitle"+mid).css("display", "block");
+           	}
+        });
+   	}
+        	
+   	function hidepopup(mid){
+   		var toReplace = document.getElementById("mtitle"+mid);
+   		toReplace.style.display = "none";
+   	}
+</script>
+
   <% ArrayList<String> movies = (ArrayList<String>) request.getAttribute("Movies"); %>
   <% ArrayList<String> ids = (ArrayList<String>) request.getAttribute("Ids"); %>
   <% ArrayList<String> directors = (ArrayList<String>) request.getAttribute("Directors"); %>
@@ -80,7 +101,6 @@
 
     <%for(int i = 0; i < movies.size(); ++i){ %>
     <tr>
-
         <%String title = movies.get(i);%>
         <%String id = ids.get(i);%>
     <table class="result-table" >
@@ -90,24 +110,11 @@
         <td><a id="mpic<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>"><img border="0" alt="<%=movies.get(i)%>" src="<%=banners.get(i)%>" width="150" height="190"></a></td>
         <td>
         <table class="movie-info-table">
-        <tr><p><a id="mtitle<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>"><%=movies.get(i)%> (<%=years.get(i)%>)</a></p></tr>
-        
-           	<script>
-        	function popup(){
-        		searchRequest = $.ajax({
-                	type: "GET",
-                    url: "Popup",
-                    data: {toSearch : <%=id%>},
-                    dataType: "text",
-                    success: function(data){
-                    	var list = data.split("\t");
-                   		alert(list);					
-                   	}
-        		});
-        	}
-        	document.getElementById("mpic" + <%=i%>).onmouseover=popup;
-        	document.getElementById("mtitle"+ <%=i%>).onmouseover=popup;
-      		</script>
+        <tr><p>
+        <a id="mtitle<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>" onmouseover="popup(<%=id%>)" onmouseout="hidepopup(<%=id%>)"><%=movies.get(i)%> (<%=years.get(i)%>)
+        <div class="replaceDiv" id="mtitle<%=id%>" style="display: none"></div>
+        </a>
+        </p></tr>      
         
         <tr class="mInfo"><td>ID:</td><td><%=ids.get(i)%></td></tr>
         <tr class="mInfo"><td>Director:</td><td><%=directors.get(i)%></td></tr>
@@ -134,7 +141,7 @@
                 <input type="hidden" name="cartMethod" value="addCart"/>
                 <input type="hidden" name="movieName" value="<%=movies.get(i)%>"/>
                 <input type="hidden" name="movieId" value="<%=ids.get(i)%>"/>
-                <button class="glyphicon glyphicon-shopping-cart" type="submit" name="cart" value="Add to cart"/>
+                <button class="glyphicon glyphicon-shopping-cart" type="submit" name="cart" value="Add to cart"/></button>
             </form>
         </td></tr>
         </table>
