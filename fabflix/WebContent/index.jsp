@@ -22,16 +22,16 @@
             data: {toSearch : mid},
             dataType: "text",
             success: function(data){
-               	$("#mtitle"+mid).html(data);
-               	$("#mtitle"+mid).css("display", "block");
+               	$("#replaceDiv").html(data);
+               	$("#myModal").modal('show');
            	}
         });
    	}
-        	
-   	function hidepopup(mid){
-   		var toReplace = document.getElementById("mtitle"+mid);
-   		toReplace.style.display = "none";
-   	}
+	
+	function hidepopup(mid){
+		var toReplace = document.getElementById("mtitle"+mid);
+		toReplace.style.display = "none";
+	}
 </script>
 
   <% ArrayList<String> movies = (ArrayList<String>) request.getAttribute("Movies"); %>
@@ -104,6 +104,15 @@
         <%String title = movies.get(i);%>
         <%String id = ids.get(i);%>
     <table class="result-table" >
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+	        <div class="modal-content get_direction_modal_bg">
+		    	<div class="modal-body">
+		    		<div class="replaceDiv" id="replaceDiv"></div>
+		    	</div>
+		    </div>
+	    </div>
+    </div>
         <tr>
         </tr>
         <tr>
@@ -111,8 +120,7 @@
         <td>
         <table class="movie-info-table">
         <tr><p>
-        <a id="mtitle<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>" onmouseover="popup(<%=id%>)" onmouseout="hidepopup(<%=id%>)"><%=movies.get(i)%> (<%=years.get(i)%>)
-        <div class="replaceDiv" id="mtitle<%=id%>" style="display: none"></div>
+        <a id="mtitle<%=i%>" value="<%=id%>" href="MoviesPage?id=<%=id%>&title=<%=title%>" onmouseover="popup(<%=id%>)" data-target="#myModal" data-toggle="modal"><%=movies.get(i)%> (<%=years.get(i)%>)
         </a>
         </p></tr>      
         

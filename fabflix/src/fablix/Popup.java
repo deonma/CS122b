@@ -40,7 +40,7 @@ public class Popup extends HttpServlet {
         buildBody(id, movie, stars, genre);
         //sb.append("<h1>Title"+ id +"</h>");
         out.println(sb.toString());
-        System.out.println(sb.toString());
+        //System.out.println(sb.toString());
 
     }
     
@@ -56,6 +56,7 @@ public class Popup extends HttpServlet {
     	+    "<script src='js/jquery.min.js'></script>"
     	+	 "<script src='js/bootstrap.min.js'></script>"
     	+ "</head>");
+    	
     }
     
     public static void buildBody(String id, ArrayList<String> movie, HashMap<String, String> stars, ArrayList<String> genre){
@@ -68,10 +69,10 @@ public class Popup extends HttpServlet {
         
         sb.append("<div class='mOuter'>"
         + "<div class='row'>"
-        + "<div class='col-sm-4 col-md-4 col-lg-4'><img class='img-responsive' src='<%="+ banner_url +"%>' style='width:150px;height:190px;float:right;'></div>"
+        + "<div class='col-sm-4 col-md-4 col-lg-4'><img class='img-responsive' src='"+ banner_url +"' style='width:150px;height:190px;float:right;'></div>"
         + "<div class='col-sm-8 col-md-8 col-lg-8'>"
         + "<table style='float:left' class='movie-table'>"
-        + "<tr><th>Title:</th><td>"+ title +"</td></tr>"
+        + "<tr><th>Title:</th><td><a id='mtitle value='"+ id +"' href='MoviesPage?id="+ id +"&title="+ title +"'>"+ title +"</a></td></tr>"
         + "<tr><th>Year:</th><td>"+ year +"</td></tr>"
         + "<tr><th>Director:</th><td>"+ director +"</td></tr>"
         + "<tr><th>Movie Id:</th><td>"+ id +"</td></tr>"
@@ -96,10 +97,10 @@ public class Popup extends HttpServlet {
         
         for(int j = 0; j < genre.size(); ++j){
         	if(j + 1 != genre.size()){
-        		sb.append("<a href='Search?genre="+ genre.get(j) +">"+ genre.get(j) +"</a>");
+        		sb.append("<a href='Search?genre="+ genre.get(j) +"'>"+ genre.get(j) +"</a>");
         		sb.append(", ");
         	}else{
-        		sb.append("<a href='Search?genre="+ genre.get(j) +">"+ genre.get(j) +"</a>");
+        		sb.append("<a href='Search?genre="+ genre.get(j) +"'>"+ genre.get(j) +"</a>");
         	}
         }
         

@@ -46,3 +46,11 @@ td {
 p {
     text-align:center;
 }
+
+.modal-content{
+	background-color:#ffc966 !important;
+}
+
+.modal-body{
+	background-color:#ffc966 !important;
+}
