@@ -6,20 +6,15 @@ import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class searchAutoComplete extends HttpServlet {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1402314384283700459L;
-	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class GenreDropDown extends HttpServlet {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AccessDB access = new AccessDB();
         ResultSet rs;
         response.setContentType("text/html");
-        String name = request.getParameter("toSearch");
-        rs = access.getDropList(name);
+        rs = access.getGenres();
         StringBuilder sb = new StringBuilder();
         boolean i = false;
         try
@@ -41,6 +36,5 @@ public class searchAutoComplete extends HttpServlet {
             out.println(sb.toString());
         	System.out.println(sb.toString());
         }
-
-    }
+    }    
 }

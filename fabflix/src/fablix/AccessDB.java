@@ -80,6 +80,16 @@ public class AccessDB {
             return rs;
         }
     }
+    public ResultSet getGenres() {
+        try{
+        		String query ="select gname from genres order by gname;";
+                return queries.selectQuery(query);
+        }catch(Exception e){
+            System.out.println(e);
+            return rs;
+        }
+    }
+
     public ResultSet searchForMovie(String toSearch, String genre, String order, int offset, boolean last, int pageLimit)  {
         try{
             if(last){
@@ -221,6 +231,8 @@ public class AccessDB {
         }
         return movies;
     }
+    
+    
 
     // Get user id from email cookie
     public String getCustomerId(String email)
@@ -262,6 +274,26 @@ public class AccessDB {
         }
     }
     
+    // Mobile methods
+    public ResultSet getMobileMovies() {
+		try {
+			return queries.selectQuery("select title from movies");
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+			return rs;
+		}
+	}
+	
+	public ResultSet getMobileSearch(String search) {
+		try {
+			return queries.selectQuery(String.format("select title from movies where title like '%%%s%%'", search));
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+			return rs;
+		}
+	}
+    
+    //
     public String bigUpdate(String title, int year, String director, String fname,
     		String lname, String genre){
     	ResultSet mrs, srs, grs;

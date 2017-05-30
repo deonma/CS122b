@@ -61,12 +61,24 @@
 		<servlet-class>fablix.searchAutoComplete</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>GenreDropDown</servlet-name>
+		<servlet-class>fablix.GenreDropDown</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>employee_login.jsp</servlet-name>
 		<jsp-file>/employee_login.jsp</jsp-file>
 	</servlet>
 	<servlet>
 		<servlet-name>Popup</servlet-name>
 		<servlet-class>fablix.Popup</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MobileLogin</servlet-name>
+		<servlet-class>mobile.MobileLogin</servlet-class>
+	</servlet>		
+	<servlet>
+		<servlet-name>MobileHome</servlet-name>
+		<servlet-class>mobile.MobileHome</servlet-class>
 	</servlet>
 
 	
@@ -131,8 +143,20 @@
     <url-pattern>/searchAutoComplete</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>GenreDropDown</servlet-name>
+    <url-pattern>/GenreDropDown</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Popup</servlet-name>
     <url-pattern>/Popup</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>MobileLogin</servlet-name>
+  	<url-pattern>/MobileLogin</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>MobileHome</servlet-name>
+  	<url-pattern>/MobileHome</url-pattern>
   </servlet-mapping>
   
   <welcome-file-list>
