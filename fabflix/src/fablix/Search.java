@@ -1,12 +1,20 @@
 package fablix;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.mysql.jdbc.Constants;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 public class Search extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -16,6 +24,16 @@ public class Search extends HttpServlet {
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	BufferedWriter log = (BufferedWriter) request.getAttribute("logger");
+    	if (log == null)
+    	{
+			FileWriter file = new FileWriter(MyConstants.LOG_FILE);
+			log = new BufferedWriter(log);
+			request.setAttribute("logger", log);
+    	}
+
+    	long TSstartTime = System.nanoTime();
 
         AccessDB access = new AccessDB();
         ResultSet rs;
@@ -103,16 +121,20 @@ public class Search extends HttpServlet {
         ArrayList<HashMap<String,String>> stars = new ArrayList<HashMap<String,String>>();
         ArrayList<ArrayList<String>> genres = new ArrayList<ArrayList<String>>();
         try{
-            boolean hasRS = true;
-            if (toSearch != null && toSearch != "") {
-                boolean searched = true;
+        	
+        	long TJstartTime = System.nanoTime();
+            if (toSearch != null && toSearch != "") 
                 rs = access.searchForMovie(toSearch, toSearch, sortString, Integer.parseInt(offset.getValue()), last, Integer.parseInt(pageCookie.getValue()));
-            }
-            else {
+            else 
                 rs = access.getPageMovies(Integer.parseInt(offset.getValue()), last, sortString, Integer.parseInt(pageCookie.getValue()), genreString);
-                }
+            long TJendTime = System.nanoTime();
+            long TSendTime = System.nanoTime();
+            long TSelapsedTime = TSendTime - TSstartTime; // elapsed time in nano seconds. Note: print the values in nano seconds 
+            long TJelapsedTime = TJendTime - TJstartTime;
+            log.write("TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n");
             int i = 0, z = 0;    
-            if(!rs.next() && offset.getValue().equals("0")){ request.setAttribute("none", "hello"); }
+            if (!rs.next() && offset.getValue().equals("0")) 
+            	 request.setAttribute("none", "hello");
             else {
                 do {
                 if(last){
@@ -159,6 +181,7 @@ public class Search extends HttpServlet {
         pageCookie.setMaxAge(60*60*24);
         response.addCookie(offset);
         response.addCookie(pageCookie);
+        
         RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
         rd.forward(request,response);
       }

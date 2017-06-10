@@ -8,6 +8,7 @@
     <title>ccInfo Form</title>
     <link rel="stylesheet" href="css/ccInfo.css">
     <script src="https://www.w3schools.com/lib/w3data.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script>
 	$(document).on('keyup', "#searchMovies", function () {
 		var that = this,
