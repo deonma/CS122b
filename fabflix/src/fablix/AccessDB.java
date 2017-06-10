@@ -1,7 +1,11 @@
 package fablix;
 
 import java.sql.*; 
-import java.util.*; 
+import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource; 
   
 public class AccessDB {  
 	private Connection conn;
@@ -16,7 +20,11 @@ public class AccessDB {
 		String password = "123456789";
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection(DB_URL, username, password);
+			//conn = DriverManager.getConnection(DB_URL, username, password);
+			Context initCtx = new InitialContext();			
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+			conn = ds.getConnection();
 			queries = new QueriesMaker(conn, ps);
 		} catch(SQLException se){
 		  //Handle errors for JDBC
