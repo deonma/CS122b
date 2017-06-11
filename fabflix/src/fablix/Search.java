@@ -124,7 +124,7 @@ public class Search extends HttpServlet {
             long TSendTime = System.nanoTime();
             long TSelapsedTime = TSendTime - TSstartTime; // elapsed time in nano seconds. Note: print the values in nano seconds 
             long TJelapsedTime = TJendTime - TJstartTime;
-            String string = "TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n";
+            String string = TSelapsedTime + "," + TJelapsedTime;
             try(FileWriter fw = new FileWriter(MyConstants.LOG_FILE, true);
             	    BufferedWriter bw = new BufferedWriter(fw);
             	    PrintWriter out = new PrintWriter(bw))
