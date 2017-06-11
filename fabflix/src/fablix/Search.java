@@ -1,47 +1,29 @@
 package fablix;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class Search extends HttpServlet {
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	/*
-    	BufferedWriter log = (BufferedWriter) request.getAttribute("logger");
-    	if (log == null)
-    	{
-    		File directory = new File(".");
-    		
-    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    		Date now = new Date();
-    	    String strDate = sdf.format(now);
-			File f = new File(System.getProperty(directory.getCanonicalPath() + 
-					File.separator + MyConstants.LOG_FILE));
-			if (!f.exists())
-				f.createNewFile();
-			System.out.println(f.getAbsolutePath());
-			FileWriter file = new FileWriter(f);
-			log = new BufferedWriter(file);
-			request.setAttribute("logger", log);
-    	} */
+    	
 
     	long TSstartTime = System.nanoTime();
 
@@ -141,7 +123,13 @@ public class Search extends HttpServlet {
             long TSendTime = System.nanoTime();
             long TSelapsedTime = TSendTime - TSstartTime; // elapsed time in nano seconds. Note: print the values in nano seconds 
             long TJelapsedTime = TJendTime - TJstartTime;
-           /* log.write("TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n");*/
+            String string = "TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n";
+            try {
+                Files.write(Paths.get("/Users/phee/Desktop/cs122b/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
+                //Files.write(Paths.get("/home/ubuntu/tomcat/webapps/logs/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
+            }catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }
             int i = 0, z = 0;    
             if (!rs.next() && offset.getValue().equals("0")) 
             	 request.setAttribute("none", "hello");
