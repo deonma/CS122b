@@ -125,7 +125,8 @@ public class Search extends HttpServlet {
             long TJelapsedTime = TJendTime - TJstartTime;
             String string = "TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n";
             try {
-                Files.write(Paths.get("/home/ubuntu/tomcat/webapps/logs/FabflixLogger.log"), string.getBytes(), StandardOpenOption.APPEND);
+                Files.write(Paths.get("/Users/phee/Desktop/cs122b/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
+                //Files.write(Paths.get("/home/ubuntu/tomcat/webapps/logs/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
             }catch (IOException e) {
                 //exception handling left as an exercise for the reader
             }
