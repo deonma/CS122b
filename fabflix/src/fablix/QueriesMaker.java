@@ -76,8 +76,8 @@ public class QueriesMaker {
 	// Returns a result set of a query
 	public ResultSet selectQuery(String query) throws SQLException
 	{
-		stmt = conn.createStatement();
-		return stmt.executeQuery(query);
+		ps = conn.prepareStatement(query);
+		return ps.executeQuery();
 	}
 
 	
@@ -183,27 +183,27 @@ public class QueriesMaker {
     }
     public ResultSet getLast(String toSwitch, int pageLimit) throws SQLException {
         String query = String.format("select * from (%s) as switch order by switch.num desc limit %d;", toSwitch, pageLimit);
-        stmt = conn.createStatement();
-        stmt.execute("set @row_number = 0;");
-        return stmt.executeQuery(query);
+        ps = conn.prepareStatement(query);
+        ps.execute("set @row_number = 0;");
+        return ps.executeQuery();
     }
     public ResultSet paginate(String toPage, int offset, int pageLimit) throws SQLException {
         String query = String.format("select * from (%s) as paged where paged.num > %d and paged.num <= %d;", toPage, offset*pageLimit, (offset+1)*pageLimit);
-        stmt = conn.createStatement();
-        stmt.execute("set @row_number = 0;");
-        return stmt.executeQuery(query); 
+        ps = conn.prepareStatement(query);
+        ps.execute("set @row_number = 0;");
+        return ps.executeQuery(); 
     }
 
     public boolean checkUser(String username) throws SQLException {
         String query = String.format("select count(*) as total from userlog where email='%s' and ison=1;", username); 
-        stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
+        ps = conn.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
         return notEmpty(rs);
     }
     public void logOff(String username) throws SQLException {
         String query = String.format("update userlog set ison=0 where email='%s' and ison=1;", username);
-        stmt = conn.createStatement();
-        stmt.executeUpdate(query);
+        ps = conn.prepareStatement(query);
+        ps.executeUpdate();
     }
     public void addUser(String username) throws SQLException {
         String addCustomer = "insert into customers values(?,default,default,default)";
@@ -223,8 +223,8 @@ public class QueriesMaker {
 	}
 	
 	public void callProcedure(String query) throws SQLException{
-		stmt = conn.createStatement();
-		int updates = stmt.executeUpdate(query);
+		ps = conn.prepareStatement(query);
+		int updates = ps.executeUpdate();
 		//return String.format("%d rows changed", updates);
 	}
 	
