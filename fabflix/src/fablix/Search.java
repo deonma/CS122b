@@ -1,5 +1,7 @@
 package fablix;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -27,10 +29,9 @@ public class Search extends HttpServlet {
 
     	long TSstartTime = System.nanoTime();
 
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(0);
         ResultSet rs;
         response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         String searchString = request.getParameter("searchstring");
         String scrollString = request.getParameter("scrollString");
         String sortString = request.getParameter("sortString"); 
@@ -124,12 +125,14 @@ public class Search extends HttpServlet {
             long TSelapsedTime = TSendTime - TSstartTime; // elapsed time in nano seconds. Note: print the values in nano seconds 
             long TJelapsedTime = TJendTime - TJstartTime;
             String string = "TS=" + TSelapsedTime + ",TJ=" + TJelapsedTime + "\n";
-            try {
-                Files.write(Paths.get("/Users/phee/Desktop/cs122b/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
-                //Files.write(Paths.get("/home/ubuntu/tomcat/webapps/logs/LogFile.log"), string.getBytes(), StandardOpenOption.APPEND);
-            }catch (IOException e) {
-                //exception handling left as an exercise for the reader
-            }
+            try(FileWriter fw = new FileWriter(MyConstants.LOG_FILE, true);
+            	    BufferedWriter bw = new BufferedWriter(fw);
+            	    PrintWriter out = new PrintWriter(bw))
+            	{
+            	    out.println(string);
+            	    out.close();
+            	} catch (IOException e) {
+            	}
             int i = 0, z = 0;    
             if (!rs.next() && offset.getValue().equals("0")) 
             	 request.setAttribute("none", "hello");

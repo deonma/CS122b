@@ -7,6 +7,9 @@ class MyConstants {
 
     public static final String SECRET_KEY ="6LeTtSAUAAAAACe93Ld4beuIXc0zcrz5D5BtdQ4D";
     
-    public static final String LOG_FILE = "log.txt";
+    public static final String LOG_FILE = "/home/ubuntu/tomcat/webapps/logs/FabflixLogger.log";
+
+    //public static final String LOG_FILE = "/Users/phee/Desktop/cs122/FabflixLogger.log";
+
 }
 
