@@ -18,7 +18,7 @@ public class Dashboard extends HttpServlet {
 	}
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
-	        AccessDB access = new AccessDB();
+	        AccessDB access = new AccessDB(1);
 	        response.setContentType("text/html");
 	        
 	        String button = null, button1 = null;

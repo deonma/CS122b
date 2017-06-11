@@ -16,7 +16,7 @@ public class ccInfo extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(1);
         HttpSession session = request.getSession();
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

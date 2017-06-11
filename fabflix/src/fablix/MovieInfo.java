@@ -6,7 +6,7 @@ public class MovieInfo {
     private String[] stars;
     ArrayList<String> genres;
     public MovieInfo(String id, String title, String year, String director) {
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(0);
         this.id = id;
         this.title = title;
         this.year = year;

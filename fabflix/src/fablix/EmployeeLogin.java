@@ -10,7 +10,7 @@ import javax.servlet.http.*;
 public class EmployeeLogin extends HttpServlet {  
 public void doGet(HttpServletRequest request, HttpServletResponse response)  
         throws ServletException, IOException {  
-		AccessDB access = new AccessDB();
+		AccessDB access = new AccessDB(0);
 		String n,p, gRecaptchaResponse;      
 		n=request.getParameter("username");  
 		p=request.getParameter("userpass");

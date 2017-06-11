@@ -13,18 +13,33 @@ public class AccessDB {
 	private QueriesMaker queries;
 	private PreparedStatement ps;
 	private ResultSet rs;
+    private String database;
+    private Random rand = new Random();
 
-	public AccessDB() {
-		String DB_URL = "jdbc:mysql://localhost/moviedb";
-		String username = "root";
-		String password = "123456789";
+    public AccessDB(int row) {
+        //0 : read
+        //1 : write
+        String DB_URL = "jdbc:mysql://localhost/moviedb";
+        String username = "root";
+        String password = "123456789";
+
+        /*if(rw == 1){
+            database = "jdbc/writedb";
+        }else{
+            if(rand.nextBoolean()){
+                database = "jdbc/m_readdb";
+            }else{
+                database = "jdbc/s_readdb";
+            }
+        }*/
+        
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			//conn = DriverManager.getConnection(DB_URL, username, password);
-			Context initCtx = new InitialContext();			
-			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
-			conn = ds.getConnection();
+			conn = DriverManager.getConnection(DB_URL, username, password);
+			//Context initCtx = new InitialContext();			
+			//Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			//DataSource ds = (DataSource) envCtx.lookup("jdbc/moviedb");
+			//conn = ds.getConnection();
 			queries = new QueriesMaker(conn, ps);
 		} catch(SQLException se){
 		  //Handle errors for JDBC

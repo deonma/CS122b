@@ -20,7 +20,7 @@ public class MobileLogin extends HttpServlet {
 		try {
 		   email = request.getParameter("email");
 		   pass = request.getParameter("pass");	
-		   AccessDB access = new AccessDB();
+		   AccessDB access = new AccessDB(0);
 		   if (access.validate(email, pass)) {
 			   out.println("true");
 		   } else {

@@ -27,7 +27,7 @@ public class Popup extends HttpServlet {
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(0);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
     

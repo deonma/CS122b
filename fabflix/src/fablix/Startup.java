@@ -10,7 +10,7 @@ import javax.servlet.http.*;
 public class Startup extends HttpServlet {
 public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    AccessDB access = new AccessDB();
+    AccessDB access = new AccessDB(0);
     response.setContentType("text/html");
     String n,p;
     Cookie user = ProcessCookies.get(request, "user");

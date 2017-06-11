@@ -15,7 +15,7 @@ public class searchAutoComplete extends HttpServlet {
         processRequest(request, response);
     }
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(0);
         ResultSet rs;
         response.setContentType("text/html");
         String name = request.getParameter("toSearch");

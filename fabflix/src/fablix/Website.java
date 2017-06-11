@@ -10,7 +10,7 @@ import javax.servlet.http.*;
 public class Website extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-	    AccessDB access = new AccessDB();
+	    AccessDB access = new AccessDB(0);
 	    response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();
 	    Cookie cookie = null;

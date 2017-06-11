@@ -24,7 +24,7 @@ public class MobileHome extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		ResultSet rs;
         String searchString = request.getParameter("searchString");
-        AccessDB access = new AccessDB();
+        AccessDB access = new AccessDB(0);
 		try {
 	        if (searchString == null) { // if this is not a search
 	        	rs = access.getMobileMovies();
